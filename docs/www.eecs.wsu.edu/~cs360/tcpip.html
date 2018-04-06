@@ -1,0 +1,187 @@
+<TITLE>CS360 NOTES</Title>
+<Body bgcolor="#FFFFd8" text="#000000">
+<H1>CS360 NOTES on TCP/IP & Network Programming</H1>
+<Pre>
+
+1. IP stands for Internet Protocol. 
+   TCP (Transmission Control Protocol) is a protocol built on top of IP. 
+   TCP/IP is the backbone of InterNet. Currently there are 2 versions of IP, 
+   known as IPv4 and IPv6. IPv4 uses 32-bit address and IPv6 uses 128-bit 
+   address. The discussion here is based on IPv4, which is still the predominat
+   version IP in use.
+
+2. Host and IP address:
+   A host is a machine that runs IP. Every host is identified by a unique 32-bit
+   number called the IP address. For human convenience, this 32-bit number is 
+   usually expressed in a "dotted" notation, such as 134.121.64.1  
+   A host is also known by a host name, e.g. dns1.eecs.wsu.edu. 
+   Host name and IP address are "equivalent" in that, given one, we can find the
+   other (by host dnsNAME or host IPaddress).
+
+3. What is IP ?  
+   IP is a protocol for sending/receiving data packets between hosts. 
+   IP operates in a best-effort manner, i.e. it just sends the packets out, but
+   it does NOT guarantee that they will be delivered to their destinations, NOR
+   in order. So, IP may be unreliable.  
+
+4. IP Packet Format:
+   An IP packet consists of
+
+      | Header |SrcIP|DestIP|<-----  DATA ----->|
+         12        4    4   |
+      |<--------------------- upto 64K bytes -->|
+  
+   The Header part contains more information, e.g. total length, TCP/UDP, TTL, 
+   check-sum for error detection, etc. about the packet so that a receiving
+   host would know what to do with the packet. For example, an IP packet is
+   simply dropped if its check-sum indicates an error or its TTL has expired.
+
+5. Routers:
+   IP hosts may be located far apart. It is usually not possible to send data 
+   packets from one host to the other DIRECTLY. 
+   "Routers" are special IP hosts that receive and forward packets. Therefore, 
+   IP packets may go through many routers, or "hops", before arriving at a
+   destination. 
+
+
+6. UDP (User DataGram Protocol)
+   UDP operates on top of IP. It is used to send/receive "datagrams". Like IP,
+   UDP does NOT guarantee reliability but it is fast and efficient. It is used 
+   in situations where reliablility is not essential.
+   Example:
+
+      ping mail.wsu.edu     OR    ping 134.121.137.14
+   
+   ping is a program that sends a UDP packet to a host, which "echo" the UDP 
+   packet back to the sender with a round-trip time in msec.
+      
+7. TCP (Transmission Control Protocol)
+   TCP also operates on top of IP but guarantees reliable data transfer. It is
+   a connection-oriented protocol for sending/receiving "data streams". 
+
+   A common analogy is that UDP is similar to "telegram" (or USPS)
+                            TCP is similar to "telephone".
+
+8. Port Number:
+   At each IP host, many applications may be running UDP/TCP at the same time. 
+   Each application is uniquely identified by a triple
+        Application = (HostIP, Protocol, PortNumber)
+   where Protocol is either UDP or TCP, and PortNumber is a unique 2-byte 
+   unsiged integer assigned to the application. In order to use UDP or TCP at 
+   a host, an application (process) must choose or obtain a PortNumber first. 
+   The first 1024 port numbers (0 to 1023) are reserved.  
+
+9. Network and Host (byte) Order:
+   Machines may use either "big-endian" or "little-endian" byte-ordering. 
+   On the "Internet", data are always in "network order", which is "big-endian".
+
+   A set of library functions htons()/htonl(), ntohs()/ntohl() are used to 
+   convert data between host-order and network-order. 
+
+10. Server-Client Model:
+    In network programming, we typically run a Server at a host first. 
+    The Server waits for Client requests and serves the requests. 
+    In UDP, the Server simply waits for "datagrams" from a Client. 
+    In TCP, the Server waits for a Client to "connect".
+
+    Then, we run the Client from a client host, 
+    In UDP, the client sends each request as a UDP datagram to the Server. 
+            Then it tries to receive a reply datagram from the Server.
+ 
+    In TCP, the Client requests to connect to the Server first. 
+    Then the Server and Client can exchange "continuous streams" of data.
+
+In the following, we shall show how to do network programming using TCP.
+
+11. Network Programming:
+    Unix (Linux) Kernel provides TCP/IP support. User interface to TCP/IP is
+    through "sockets". To the user (program), creating a socket is similar to 
+    opening a file for RW. It returns an integer socket number, which can be 
+    used as a file descriptor in read()/write() system calls.
+
+12. Sockets Programming
+
+    First, we need the following C structs defined in netdb.h and sys/socket.h
+
+12-1.The socket address data structure:
+
+    struct sockaddr_in {
+       u_short        sin_family; /* protocol identifier; usually AF_INET */
+       u_short        sin_port;   /* port number. 0 means let kernel choose */
+       struct in_addr sin_addr;   /* IP address. INADDR_ANY=the current host.*/
+       char           sin_zero[8];}; /* Unused, always zero */
+    }
+
+    struct in_addr {
+        u_long s_addr;
+    };
+
+12-2. The hostent struct in &lt;netdb.h&gt; is as shown (man gethostbyname):
+        
+        struct hostent {
+               char    *h_name;        // DOT name string of host
+               char    **h_aliases;    // alias list 
+               int     h_addrtype;     // host address type
+               int     h_length;       // length of address
+               char    **h_addr_list;  // list of addresses (long IP address)
+        }
+        #define h_addr  h_addr_list[0]  // for backward compatibility 
+
+        // NOTE: h_addr is defined as a char * but it points at the IP_address,
+        //       which is a 4-byte number in network (big-endian) order.
+        // ulong NIP = *(ulong *)h_addr is the IP_address in network order.
+        // ulong HIP = ntohl(NIP) is NIP in host order (INTEL=little-endian).
+        // inet_ntoa(NIP) converts NIP to a string in DOT notation.
+
+13. An ECHO Server/Client Program using TCP
+
+    Download server.c and client.c files from our ~samples/LAB5/ directory.
+
+    First, run the server at a host as        server [hostname]
+    where hostname is either the DNS name or IP address of the host machine. 
+    If no hostname is given, the default "localhost" (127.0.0.1) will be used.
+
+    The Server first displays the server's hostname, IP address and port number
+    Then it waits for a client to connect.
+
+    Next, run the client at another host as   client ServerName ServerPort
+
+    (You may also run both on the SAME host but in separate X-windows).
+
+    After connecting to the server, the client asks the user for an input 
+    string, sends it to the server, which simply echos the string back.
+
+    When the client ends (by Enter key or Control-C), the server detects that 
+    the client has broken off the TCP connection and loops back to accept 
+    another connection, etc.
+
+    The sequence of actions between the server and the client are shown
+    in the following diagram.
+
+                                ACTIONS OF 
+            Server                                       Client:
+   --------------------------------      ---------------------------------
+1. Display hostname, IP, Port#      ===> 1. MUST know Server's name|IP,Port#
+2. Construct a server_addr struct        2. Construct a server_addr struct 
+3. Create a TCP socket with Port#        3. Create a TCP socket sock
+4. Bind socket to server_addr info             
+5. Listen at socket by listen() syscall
+6. newsock = accept()               <==  4. connect() to Server via sock
+   ------------------------------------------------------------------------
+                           Send/Receive Data
+7. READ from newsock      <------------------  WRITE to  sock
+   WRITE to  newsock      ------------------>  READ from sock
+   ------------------------------------------------------------------------
+8. loop to 6 to accept next client             close(sock);
+
+
+
+The above Server/Client code may be used as the basis for TCP-orineted network
+programming. You may adapt it for different applications by simply changing the
+data contents and the ways they process the data.
+
+========================== HOMEWORK =======================================
+Modify the server.c and client.c files to do computations:
+       client: send 2 numbers to server, which returns the SUM.
+=========================================================================== .
+

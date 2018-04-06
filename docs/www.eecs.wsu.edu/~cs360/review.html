@@ -1,0 +1,175 @@
+<TITLE>CS360</TITLE>
+
+<BODY bgcolor="#00CCCC" TEXT="#000000" LINK="#990000" VLINK="#0000FF" ALINK="#3300FF"> 
+<pre>
+<P>======= POSTED class notes =========
+<P>Chapter 2.3: Programm Development
+<P>Chapter 2.4: Function Calls in C
+<P>Linking C and Assembly Code
+<P>
+1. What's cc? (Steps and what does each step do)
+
+2. Dynamic Vs. static linking?
+
+
+3-1. Given a C program, which is run as   a.out this is a test
+        int g;
+        int h = 1;
+
+        main(int argc, char *argv[])      int A( int x, ......)
+        {                                 {                            
+           int a,b,c;                        int u,v;
+           a = 2; 
+           b = 3;                            HERE:       
+           c = A(a,b,"hello");      
+        }                                 }
+
+   (0). Complete the function heading of A(....)
+   (1). Which variables are global? local?   
+   (2). Which variables are in a.out?
+   (3). In the run-time memory of a.out, where are the variables?
+   (4). Execution is at HERE:  DRAW A DIAGRAM TO Show 
+           the stack contents from HERE to main()'s argc and argv.
+
+3-2. Given: printu(unsigned int x), which prints an UNSIGNED integer.
+     Write C code to print a SIGNED integer (which may be negative).
+
+3-3. LAB#1: YOUR printf(char *fmt, ...) is written as
+                 {
+                   char *cp; 
+                   int  *ip;
+                   ..........
+                 }
+     which may be called as 
+
+                 printf("abc %c xyz %s any %d thing %x\n", a,b,c,d);
+
+(1). Write C code to let cp point to the fmt string       _____________
+(2). Write C code to let ip point to the first parameter a _______________
+(3). HOW do you print each of the items a,b,c,d?
+
+(4). What if YOUR printf() is called as
+             printf("%c %s\n", a,b,c,d)?
+             printf("%c %s %d %d %x %d %d\n", a,b,c,d)?
+
+
+3.4.(1). The main() function in C can be written as
+         main(int argc, char *argv[], char *env[])
+
+DRAW A DIAGRAM TO SHOW exactly what is argv?__________
+
+
+(2). Given: main() is in assembly, mymain() is in C as
+            mymain(int argc, char *argv, char *env)
+
+ #--------------------- s.s file --------------------------
+         .global main, mymain, myprintf
+main:    
+         pushl  %ebp
+         movl   %esp, %ebp
+
+Write ASSEMBLY code to call mymain(argc, argv, env) in C
+
+         movl  %ebp, %esp
+ 	 popl  %ebp
+	 ret
+
+
+<P>
+<A HREF="notes4.html">Notes #4 : List Processing and LAB#2</a>
+<P>
+4. Write C statements for a struct containing
+         ---------------------------------------    
+         NEXT  : a pointer to the SAME struct
+         ID    : an integer                         
+         NAME  : an array of 256 chars              
+         ---------------------------------------    
+5. Write C statements to
+     print a list's ID NAME fields__________________________________
+     search a list for a given NAME ________________________________
+     insert a new element to the end of a list, which may be NULL___________
+     delete a list element by ID ___________________________________________
+
+
+<A HREF="PROC.html">Notes #6 : Process Management in Unix</a>
+<A HREF="LABsh.html">LAB3 : Sh Simulator</a>
+<P>
+6.   what does   int pid = fork()    do? 
+     after fork(); HOW TO TELL whether it's the parent or the child?
+
+7. What does     int wait(int *status)  do?
+
+
+8.  What does  int   r = execve("a.out", argv, env);    do?
+    How does the system find a.out?__________________________________
+
+    When running YOUR sh with    cat file1 file2 file3    
+    The (Linux) cat will cat 3 files in a row. 
+    Draw a diagram to show exactly what's YOUR argv in the
+    
+       r = execve("/DIR/cat", argv, env) call?_________________________
+
+    What's the value of r?  ____________
+
+    How did YOU do  a.out > outfile ? __________________________________
+
+    HOW did you do PIPE in  cat file | grep pattern ?__________________________
+
+<P>
+<A HREF="fileops.html">Notes #7: File Operations</a>
+<A HREF="syscall.html">Notes #8: System Calls for File Operations</a>
+<A HREF="libio.html">Notes #9: Library I/O Functions</a>
+<P>
+    
+9. File Operation Levels:
+     sh scripts 
+     user commands
+     library I/O functions
+     system calls 
+   What's the relationship (if any) among the levels?
+
+   What's the relationship between the following
+          open,  read,  write
+         fopen, fread, fwrite 
+
+   Write C code to
+     open a file for READ; read the SECOND block of 1024 bytes into a buf[]
+     open a file for WRITE (CREAT if needed); write a string of chars to it.
+
+   When copy files, which is BETTER? by syscall OR by Lib I/O? WHY____________
+
+
+10. stat() (and lstat()):
+    What does it do?
+    HOW TO determine a files's type, e.g. REG or DIR?
+    HOW TO get the file size, ctime?
+    How to print ctime in calendar form?
+    How to tell whether 2 pathnames are really the SAME file?
+
+11. HOW TO use opendir(), readdir()?
+    HOW did you do ls DIRECTORY?
+
+<P>
+<A HREF="HOMEWORK#5 Pre">Web CGI Programming</a>
+<A HREF="LAB4.tcp.html">LAB#4 : File Server-Client</a>
+
+12. HTTP programming: you used the URL 
+         http://cs360.eecs.wsu.edu/~YOUR_NAME
+    to access YOUR web page at the cs360.eecs.wsu.edu host, which gives you
+    a web page:
+        ----------------------------------------
+        | Welcome to YOUR Website              |
+        |     your picture                     |
+        | Input command  :  BOX                | 
+        | Input filename1:  BOX                |
+        | Input filename2:  BOX                | 
+        | Submit command :  Submit BOX         |
+        ----------------------------------------
+
+(1). When you click the submit BOX, where did it go to?
+(2). How did you let it go to execute YOUR mycgi program?
+(3). How did YOUR mycgi program generate a web page (which is sent back)?
+(4). YOUR mycgi program is executed by a PROCESS at the web server machine.
+          Who is the owner of that PROCESS?
+          HOW can it wirte to YOUR directory?
+

@@ -1,0 +1,215 @@
+<Title>360 Week 2 Notes</Title>
+<Body bgcolor="#00cccc" text="#000000">
+
+<H1>360 Notes on Linking C and Assembly Code</H1>
+
+<pre>
+
+1. C code to Assembly Code
+
+/************* a.c file ********************/
+#include &lt;stdio.h>
+
+extern int B();
+
+int A(int x, int y)
+{
+  int d,e,f;
+  d=4; e=5; f=6;
+  B(d,e);
+}
+
+======= compile a.c file into assembly code ======
+cc -m32 -S a.c ===> a.s file
+
+
+==================================================
+	.file	"a.c"
+	.text
+.globl A
+	.type	A, @function
+A:
+	pushl	%ebp
+	movl	%esp, %ebp
+
+
+	subl	$24, %esp
+	movl	$4, -12(%ebp)
+	movl	$5, -8(%ebp)
+	movl	$6, -4(%ebp)
+
+
+	subl	$8, %esp
+	pushl	-8(%ebp)
+	pushl	-12(%ebp)
+	call	B
+
+
+	addl	$16, %esp
+	leave
+	ret
+
+================================================================
+A:
+	pushl	%ebp
+	movl	%esp, %ebp
+
+         SP
+---------|--------------------------- LOW address
+ xxx |PC|FP|
+---------|---------------------------
+         FP
+
+	subl	$24, %esp
+	movl	$4, -20(%ebp)  // d=4
+	movl	$5, -16(%ebp)  // e=5
+	movl	$6, -12(%ebp)  // f=6
+
+
+         SP  ---   -24  -----> SP
+         |                     |
+---------- -4  -8 -12 -16 -20 -24|---------------------- LOW address
+ xxx |PC|FP|? |? | 6 | 5 | 4 |?  | 
+---------|---------f---e---d-----|-----------------------
+         FP 
+
+# call B(d,e): push parameters  e, d	
+
+	subl	$8, %esp ===> ?? cells on stack
+	pushl	-16(%ebp)        // push e
+	pushl	-20(%ebp)        // push d
+
+                                                        SP
+	---------- -4  -8 -12 -16 -20 -24---------------|------- LOW address
+	 xxx |PC|FP|? |? | 6 | 5 | 4 |?  | ??| ?? | e | d |
+	---------|---------f---e---d-----|-----------------------
+                 FP 
+ 
+	call	B   // call B => B() will continue to grow stack to the RIGHT
+
+
+# when B() returns:            
+                                   
+	addl	$16, %esp ==> SP back to original place BEFORE calling B()
+
+#	leave  SAME AS
+        movl   %ebp, %esp
+	popl   %ebp
+	ret
+
+EXERCISE: ADD code to show where x, y are located? x: __________  y: __________
+
+
+2. Implement C functions in Assembly:
+
+Example 1: Functions for getting CPU registers
+
+#============== s.s file ===============
+	.global get_esp, get_ebp
+get_esp:
+         movl	%esp, %eax
+         ret
+get_ebp:
+	movl	%ebp, %eax
+	ret
+#======================================
+
+main()
+{
+   int ebp, esp;
+   ebp = get_ebp();
+   esp = get_esp();
+   printf("ebp=%8x   esp=%8x\n", ebp, esp);
+}
+
+EXERCISE: Write assembly functions to get CPU's ebx, ecx, edx, esi and edi
+
+Example 2. Write OUR OWN  
+             
+                 int mysum(int x, int y){return x + y;}  
+
+           in ASSEMBLY:
+
+main()
+{ 
+  int a,b,c;
+  a = 123; b = 456;
+  c = mysum(a,b);
+  printf("c=%d\n", c);   // c should be 579
+}
+
+==================================================
+# int mysum(int x, int y)
+
+        .global mysum, printf
+mysum:
+
+# (1) Entry : (establish stack frame)
+
+        pushl %ebp
+        movl  %esp, %ebp
+
+#            12   8    4     0 
+#----------------------------------------------------
+#          |  y | x |retPC| ebp|
+#----------------------------|-----------------------
+#                           ebp
+
+#------ call printf() to print x and y -----------------
+#        pushl 12(%ebp)
+#        pushl  8(%ebp)
+#        pushl $fmt
+
+#        call  printf
+#        addl  $12, %esp
+#-------------------------------------------------------
+
+# (2):----- ACTUAL CODE of mysum -----------
+        movl  8(%ebp), %eax
+        addl 12(%ebp), %eax
+#-------------------------------------------     
+
+# (3) return to caller
+        movl  %ebp, %esp
+        pop   %ebp
+        ret
+
+        .data
+fmt:    .asciz "x=%d  y=%d\n"
+ 
+==================================================
+
+3. Call C functions from Assembly:
+
+Example 3: Access global variables AND call printf()
+ 
+int a, b;
+
+main()
+{
+   a = 100;  b = 200;
+   sub();
+}
+
+#===================================
+
+        .global sub, a, b, printf
+sub:
+        pushl   %ebp
+        movl    %esp, %ebp
+
+        pushl   b
+        pushl   a
+        pushl   $fmt
+
+        call    printf
+
+        addl    $12, %esp
+        
+        movl    %ebp, %esp
+        popl    %ebp
+        ret
+
+        .data
+fmt:	.asciz	"a=%d  b=%d\n" 
+#====================================

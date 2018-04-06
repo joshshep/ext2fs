@@ -1,0 +1,104 @@
+<html>
+<body>
+<pre>
+
+<h2>    Before demo. your final project, 
+you must complete the course evaluation</h2>
+
+<h1> Course Evaluation </h1>
+----------------------------------------------------------------------------
+1. EECS requires students evaluations of courses.
+
+Students may access their online course evaluations in two ways:
+A. Email invitations: These are sent to students’ WSU email address (the preferred email address in myWSU).
+
+B. myWSU: You log into myWSU and choose the Blue course evaluation dashboard in the center column. It will
+        list the online course evaluations that are ready for courses you are enrolled in. Note that online course
+        evaluations are released at different times, determined by each college. Please check your Blue dashboard in
+        myWSU, as evaluations will appear as they are released by each college, with email notification as well.
+----------------------------------------------------------------------------
+
+=================== 360 Project Self-Test LIST ===========================
+
+                        LEVEL-1                     
+        COMMANDS                       EXPECTED RESULTS
+    ------------------        ---------------------------------------------
+     startup & menu:             start up and show commands menu
+     cd /; pwd ;     ls          cd to / and show contents of / directory
+     mkdir /a ;      ls          make a few dir(s) and show results.
+     mkdir /a/b ;    ls /a       make dir with PATHNAMEs and show results
+    
+     cd /a/b; mkdir new; mkdir /a/b/again;  
+
+     cd    /a/b ;    pwd         be able to cd to a pathname, and show pwd
+     cd    ../../ ;  pwd         be able to cd upward and show the results
+     creat f1     ;  ls          create a few files and show that they exist
+     creat /a/f2;    ls /a       be able to create files with pathnames
+     chmod 0766 /f1; ls /        show the chmod, touch commands       
+     touch /a/f2     ls /a/f2    show changes in the time field 
+     rmdir /a/b/c ;  rmdir /a    be able to handle invalid rmdir requests
+     rmdir /a/b   ;  rmdir /a    rmdir and show results
+     rm    /f1    ;  ls /
+        
+     creat f2; link f2 newf2; link f2 newf3;           # hard link
+
+     symlink oldfile newfile; ls (see the symlink)     # symlink
+     
+     unlink f2; unlink newf2; unlink newf3             # unlink
+
+                        LEVEL-2
+    ------------------        ----------------------------------------------
+     creat /f1 ; creat f2       create a few files
+     open  /f1 1        ; pfd   open a file for WRITE and show the opened fd
+     write fd "testing" ; ls    be able to write text into an opened fd
+     write fd "new text"        continue to write more, etc.
+     close fd                   close the file
+
+     open  /f1 0;      pfd      open a file for READ and show the fd
+     read  fd  10               read and display the text 
+     read  fd  100              read and display the text
+     read  fd  200              should handle END of file
+     lseek fd  0                lseek to beginning
+     read  fd  100              read again, etc
+     close fd
+
+     open /f1 3 ;      pfd      open a file in APPEND mode and show fd
+     write fd "added text"      write to file
+     close fd                   close the file
+     
+     cat /f1                    show contents of /f1 (should have ALL texts)
+     cp  /f1 /f2                cp file to file
+     mkdir /new                 make a new dir
+     mv  /f1  /new/newfile      mv file to file
+ 
+NOTE: Instead of INDIVIDUAL open-read-write, you may use YOUR cp to copy 
+      small, large and huge files and verify that your cp works correctly.
+
+     cp  f1 f2                   
+   
+
+       LEVEL-3 (EXTRA CREDITs only if use YOUR getino(), iget(), iput()
+    ----------------------      -------------------------------------------
+    mount FS /a/b ; mount       mount FS to /a/b and show mounted devices
+    cd /a/b       ; pwd         cd into mounted FS
+    mkdir c; creat f            mkdir and create files on FS
+    (cp write into f)             
+    cd c  ; pwd                 cd into a dir in FS
+    cd ../../../ ; pwd          cd backward to cross mounting point
+    umount FS                   umount FS
+    (test FS under Linux to verify its contents: c and f should exist)
+
+    show other leverl-3 commands PER LEVEL-3 REQUIREMENTS IN WEBPAGE.
+    cs; permission checking (rmdir/rm files not belonging to uid)
+-------------------------------------------------------------------------------
+                      TEST UNDER LINUX
+1. After running YOUR project, mount the FD(file) under Linux; verify contents.
+
+2. Run your project on the mydisk image with  X,    Y,      Z    directories
+                                              |     |       |
+                                             tiny bigfile hugefile
+3. mkdir /X/newdiragain
+
+4. cat and cp the tiny, big and huge files.
+   then check results under Linux
+==============================================================================

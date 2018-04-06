@@ -1,0 +1,199 @@
+<Title>360 PROJECT HELP</Title>
+<Body bgcolor="#00CCCC" text="#000000">
+
+<H1>LAB Assignment #6</H1>
+
+<Pre>
+
+/ *************** DUE & DEMO : Week of 3-27-2017 ********************
+ 
+ Write a C program, showblock, which displays the disk blocks of a file 
+ in an EXT2 file system. The program runs as follows
+
+       showblock  DEVICE    PATHNAME
+       ---------  -------   ----------
+e.g.   showblock  diskimage  /a/b/c/d  (diskimage contains an EXT2 FS)
+OR     showblock  /dev/sda2  /x/y/z    (/dev/sda2 is YOUR HD partition)
+
+ It locates the file named PATHNAME and prints the disk blocks (direct, 
+ indirect, double-indirect) of the file.
+**************************************************************************/ 
+
+               HOWTO Traverse EXT2 File System Tree
+
+1. REVIEW The Mailman's Algorithm
+
+2. Traverse the EXT2 FS tree
+   Given a device (mydisk or diskimage, containing an ext2 FS, and a pathname, 
+   e.g. 
+                   /cs360/is/fun
+   of a file, find the file.
+
+   NOTE!!! To find a file amounts to finding its INODE. 
+           From the inode, you have ALL the information of a file.
+
+  
+3. ALGORITHM: Chapter 2; Section 2.8.2
+  
+1. Open the device for READ. 
+   Read in Superblock (blk #1 for FD to verify it's indeed an ext2 FS. (HOW?)
+
+   (With the SuperBlock read in, you might as well print some of its important
+    fields, e.g. nblocks, ninodes, ngroups, inodes_per_group, number of free 
+    inodes and blocks, etc.
+   )
+
+2. Read in the group descriptor block (block #2 for FD) and access Group0 
+   Descriptor. From its bg_inode_table entry, determine where INODEs begin on 
+   the disk. Call it the InodesBeginBlock.  
+
+3. Read in InodeBeginBlock to get the inode of /, which is INODE #2.
+   NOTE: inode number counts from 1.
+
+4. Break up pathname into components and let the number of components be n,
+   Example:
+                            |<----- n = 3  ---->|
+         /cs360/is/fun  ==> cs360     is      fun 
+
+   Denote the components by name[0] name[1] name[n-1]
+
+   YOU HAVE DONE THESE BEFORE!!!
+
+6. Start from the root INODE in (3), search for name[0] in its data block(s).
+   For DIRs, you may assume that (the number of entries is small so that) it 
+   only has DIRECT data blocks. Therefore, search only the direct blocks for 
+   name[0].
+
+   Each data block of a DIR inode contains DIR structures of the form 
+
+     [ino rlen nlen .   ] [ino rlen nlen ..  ] [ino rlen nlen NAME ] ....
+     [ino rlen nlen NAME] [ino rlen nlen NAME] [ino rlen nlen NAME ] ....
+     
+   where each NAME is a string (without terminating NULL !!!) of nlen chars. 
+   You may use nlen to extract the NAME string, and rlen to advance to the 
+   next DIR structure (Listen to lecture in class). 
+
+   If name[0] exists. you can find its inode number.
+
+7. Use the inode number, ino, to locate the corresponding INODE:
+   Recall that ino counts from 1.  Use the Mailman's algorithm
+
+               (ino - 1) / 8    and   InodeBeginBlock    
+               (ino - 1) % 8 
+               
+   to read in the INODE of /cs360
+
+   NOTE: the number 8 comes from : for FD, blockSize=1024 and inodeSize=128. 
+         If BlockSize != 1024, you must adjust the number 8 accordingly.
+
+   From the INODE of /cs360, you can easily determine whether it's a DIR.
+   
+   (Remember S_ISDIR(), S_ISREG() ?)
+  
+   If it's not a DIR, there can't be anything like /cs360/is ...., so give up.
+
+   If it's a DIR and there are more components yet to search (BAD NEWS!)
+   you must go on.
+
+   The problem now becomes:
+       Search for name[1] in the INODE of /cs360
+   which is exactly the same as that of Step (6).
+
+8. Since Steps 6-7 will be repeated n times, you should implement a function
+ 
+     int search(INODE * inodePtr, char * name)
+         {
+            // search for name string in the data blocks of this INODE
+            // if found, return name's inumber
+            // else      return 0
+         }
+
+
+7. Then, all you have to do is call search() n times, as sketched below.
+
+   Assume:    n,  name[0], ...., name[n-1]   are globals
+
+   ip --> INODE of /
+
+   for (i= 0; i &lt; n; i++){
+       inumber = search(ip, name[i])  
+       if (inumber == 0) : can't find name[i], BOMB OUT!
+       -------------------------------------------------------
+       use inumber to read in its INODE and let ip --> this INODE 
+   }
+  
+   // if you reach here, you must have ip --> the INODE of pathname.
+
+
+8. Extract information from ip --> as required.
+   Pat yourself on the back and say: Good Job!
+
+
+9. SAMPLES SOLUTION in samples/SHOWBLOCK/:
+            showblock.bin     diskimage
+    Run it under Linux as
+            showblock.bin diskimage pathname 
+                                          
+10. HELP sh scripts
+
+(1). To create a mydisk with DIRs and FILEs:
+
+    # mkdisk
+    touch mydisk
+    sudo mkfs mydisk 1440
+    sudo mount -o loop mydisk /mnt
+    (cd /mnt; mkdir a b c d; touch f1 f2 f3)
+    ls -l /mnt
+    sudo umount /mnt
+
+
+(2). HOW TO CHECK EXT2 FS contents:
+
+        #------ Run as a sh script -----------
+        sudo mount -o loop diskimage  /mnt
+        ls -l /mnt
+        (cd into /mnt to browse its contents)
+        sudo umount /mnt
+        #------------------------------------
+
+
+A diagram of INODES:
+
+
+    |  InodeBeginBlock |                  |
+---------------------------------------------------------
+    |01|02|03|04|...|08|09|10|11|12|...|16|17....
+---------|------------------------|----------------------
+         |                        |
+     -----------              ----------     
+       INODE                    INODE
+     i_block[0]               i_block[0]
+     ----|------              ----|------
+         |                        ----------------------
+         |                        |. | ..|16 x |NN y |.....
+         ----------------------   ----------------------
+         | .| ..|12 a |13 b| ...  
+         ----------------------
+
+				 
+(1). Given an INODE, search its data block(s) for a name, e.g. "a"
+(2). Once you find "a", you find its inode number, ino,   e.g.  12
+(3). Mailman's algorithm:
+	 blk    = InodeBeginBlock + (ino-1)/8
+	 offset = (ino-1)%8
+
+(4). get_block(fd, blk, ibuf[]);         // get block containing this INODE
+     INODE *ip = (INODE *)ibuf + offset; // ip points at INODE of /a in ibuf[ ]
+	
+======================================================================
+                QUIZ on Monday: 
+         Close NOTES!!! 10 minutes time
+
+SAMPLE QUESTIONS:
+
+Write C code to find the Inode Begin Block number
+
+Given: char buf[1024] contains the data block of a directory.
+Write C code to print the names of all the DIR entries in the data block.
+
+				 

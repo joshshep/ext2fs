@@ -1,0 +1,10 @@
+mkdir a
+mkdir /b
+mkdir ./c
+
+mkdir a
+
+mkdir a/x
+mkdir a/y
+
+mkdir a/y

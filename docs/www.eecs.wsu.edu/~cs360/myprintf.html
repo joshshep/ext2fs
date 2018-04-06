@@ -1,0 +1,193 @@
+<html>
+<BODY>
+<pre>
+               <H2>CS 360 Programming Assignment #2</h2>
+                  <h2>DUE: Friday Jan. 27, 2017</h2>
+
+========================== HOW TO SUBMIT ==================================== 
+1. Create a working directory named ASS2 containing all your source code, e.g.
+            type.h, a2.c
+   which can be compiled and run as
+                gcc -m32 a2.c
+                a.out
+2. Run   tar -cvf a2.tar ASS2    # create a2.tar file
+3. Run   gzip a2.tar             # create a2.tar.gz file
+4. Email YOUR     a2.tar.gz      file to the TA 
+
+5. TA will test run your a.out and CHECK your a2.c source file. 
+6. WARNING: ANY plagiarism will be detected and reported.
+============================================================================
+
+1. OBJECTIVES: Stack Usage and YOUR myprintf() FUNCTION
+               Ordered Link List as Priority Queue
+
+==================================================================
+                2. REQUIREMENTS:
+
+2-1. Given: putchar(char) of Linux, which prints a char.
+     Write YOUR own myprintf(char *fmt, ...) function to print 
+           char                      by %c
+           string                    by %s
+           unsigned integer          by %u
+           integer                   by %d
+           unsigned integer in OCT   by %o
+           unsigned integer in HEX   by %x
+     Ignore field width and precision, just print the items as specified.
+
+<h2>READ: Chapter 3:3.4.1: I/O and Memory Access Function</H2>
+
+2-2. In YOUR  main(int argc, char *argv[ ], char *env[ ]) function, 
+     use YOUR myprintf() to print
+              argc value
+              argv strings
+              env  strings
+===================================================================== 
+    NOTE: YOU MUST READ THE TEXTBOOK and ATTEND THE CLASS LECTURE.
+=====================================================================
+An operating system kernel only supports how to print char. 
+All other printings are based on printing char through the OS kernel. 
+
+In Linux, putchar(char c) prints a char.
+
+1. Use putchar() to write YOUR OWN prints(char *s) to print a string.
+
+2. typedef unsigned int u32;
+
+   The following printu(u32 x) function prints an unsigned int (u32)x:
+
+int BASE = 10;
+char *table = "0123456789ABCDEF";
+
+int rpu(u32 x)
+{
+  char c;
+  if (x){
+     c = table[x % BASE];
+     rpu(x / BASE);
+     putchar(c);
+  }
+} 
+
+int printu(u32 x)
+{
+  if (x==0)
+     putchar('0');
+  else
+     rpu(x);
+  putchar(' ');
+}
+
+
+3. WRITE YOUR OWN functions:
+   int printd(int x): print an integer (which may be negative!!)
+   int printo(u32 x): print x in OCTal as 0.....
+   int printx(u32 x): print x in HEX.  as 0x....
+
+4. WRITE a myprintf(char *fmt, ...) for formatted printing, e.g.
+
+      myprintf("this is a string\n");    // PRINT: this is a string
+
+      myprintf("this is %c hi %d test %x\n", 'A', 1234, 100);
+      // PRINT: this is A hi 1234 test 0x64
+ 
+   
+  Your myprintf() should print items by %c, %s, %u, %d, %o, %x, 
+  just like printf().
+
+
+<h2>READ: Chapter 3 of TEXT: Page 69-70 !!!!</h2>
+
+/********************** HELP INFO ***********************************
+int myprintf(char *fmt, ...)      // C compiler requires the 3 DOTs
+{
+   Assume the call is myprintf(fmt, a,b,c,d);
+   Upon entry, the stack contains:
+
+ 
+                char *cp -> "...%c ..%s ..%u .. %d .. %o .. %x...\n"
+   HIGH               |                                              LOW 
+ --------------------------- --|------------------------------------------
+   | d | c | b | a | fmt |retPC| ebp | locals
+ ----------------|----------------|------------------------------
+                 |                | 
+            int *ip            CPU.ebp
+  
+  
+     1. Let char *cp point at the format string:  char *cp = fmt;
+
+     2. Let int *ip  point at the first item to be printed on stack:
+            int *ip = &fmt + 1;
+
+  *************** ALGORITHM ****************
+   Use cp to scan the format string:
+       spit out any char that's NOT %
+       for each \n, spit out an extra \r
+
+   Upon seeing a %: get next char, which must be one of 'c','s','u','d', 'o','x'
+   Then call
+
+        putchar(*ip) for 'c';
+        prints(*ip)  for 's';
+        printu(*ip)  for 'u';
+        printd(*ip)  for 'd';
+        printo(*ip)  for 'o';
+        printx(*ip)  for 'x';
+
+   Advance ip to point to the next item on stack.
+
+After implementing your myprintf() function, write simple C programs to test 
+your myprintf() function first.
+
+
+<H1>3. Programming Assignment</H1>
+
+Given: the following node type:
+
+typedef struct node{
+  struct node *next;
+  char name[64];
+  int priority;
+}NODE;
+
+NODE *readyQueue = 0;    // an empty queue to start
+
+A priority QUEUE is a link list ordered by priority. In a priority queue, nodes 
+with the same priority are ordered First-In-First-Out (FIFO). 
+
+Write your OWN
+
+int enqueue(NODE **queue, NODE *p) 
+{ 
+    enters p into *queue by priority 
+}
+
+NODE *dequeue(NODE **queue) 
+{ 
+  delete the first node from *queue (if any) and
+  return the NODE (pointer) with the highest priroity 
+}
+
+=============================================================================
+4. Write your main() to test YOUR myprintf() and enqueue() functions.
+   Use YOUR myprintf() function to print !!!!
+
+int main(int argc, char *argv[], char *env[])
+{
+     NODE *p;
+(1). print 
+     argc;
+     all (strings of) argv[ ];
+     all (strings of)  env[ ];
+
+     int i = 0;
+(2). while(1){
+        p = malloc() a node; 
+        fill node with name = "nodei";           // NOTE: i=0,1,2,....
+                       priority = rand() % 10;   // value=0 to 9
+        enqueue(&readyQueue, p);                 // enqueue p
+        print readyQueue;                        // show the readyQueue
+        i++;
+     }
+}
+=============================================================================
+5. Sample Solution:  ~samples/ass2.bin

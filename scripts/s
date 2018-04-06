@@ -1,0 +1,3 @@
+sudo mount -o loop ../disks/exam_image /mnt
+ls -al /mnt
+sudo umount /mnt

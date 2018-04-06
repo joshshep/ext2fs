@@ -1,0 +1,213 @@
+<html>
+<body>
+<pre>
+
+                   PROJECT Assignment #1
+  
+              MUST complete this work THIS WEEK
+   
+        Wed:    3/29: work on THIS code in class
+        Friday: 3/31: Bring in your LABTOP to show you can mount root and ls,cd
+
+                      QUIZ on Monday 4/3/2017
+
+
+OBJECTIVE: mount root to start the PROJECT; ls, cd, pwd to show FS contents
+
+/*************** type.h file ***************
+typedef unsigned char  u8;
+typedef unsigned short u16;
+typedef unsigned int   u32;
+
+typedef struct ext2_super_block SUPER;
+typedef struct ext2_group_desc  GD;
+typedef struct ext2_inode       INODE;
+typedef struct ext2_dir_entry_2 DIR;
+
+SUPER *sp;
+GD    *gp;
+INODE *ip;
+DIR   *dp;   
+
+#define BLKSIZE  1024
+#define NMINODE   100
+#define NFD        16
+#define NPROC       2
+
+typedef struct minode{
+  INODE INODE;
+  int dev, ino;
+  int refCount;
+  int dirty;
+  int mounted;
+  struct mntable *mptr;
+}MINODE;
+
+typedef struct oft{
+  int  mode;
+  int  refCount;
+  MINODE *mptr;
+  int  offset;
+}OFT;
+
+typedef struct proc{
+  struct proc *next;
+  int          pid;
+  int          uid;
+  MINODE      *cwd;
+  OFT         *fd[NFD];
+}PROC;
+*********************************/
+
+
+GIVEN BASE Code: Complete THIS code during class lecture.
+
+#include &lt;stdio.h>
+#include &lt;stdlib.h>
+#include &lt;fcntl.h>
+#include &lt;string.h>
+#include &lt;libgen.h>
+#include &lt;sys/stat.h>
+#include &lt;ext2fs/ext2_fs.h> 
+
+#include "type.h"
+
+// global variables
+
+MINODE minode[NMINODE];        // global minode[ ] array           
+MINODE *root;                  // root pointer: the /    
+PROC   proc[NPROC], *running;  // PROC; using only proc[0]
+
+int fd, dev;                               // file descriptor or dev
+int nblocks, ninodes, bmap, imap, iblock;  // FS constants
+
+#include "iget_iput_getino.c"  // YOUR iget_iput_getino.c file with
+                               // get_block/put_block, tst/set/clr bit functions
+
+char *disk = "mydisk";
+char line[128], cmd[64], pathname[64];
+char buf[BLKSIZE];              // define buf1[ ], buf2[ ], etc. as you need
+
+main(int argc, char *argv[ ])   // run as a.out [diskname]
+{
+  if (argc > 1)
+     disk = argv[1];
+
+  if ((dev = fd = open(disk, O_RDWR)) < 0){
+     printf("open %s failed\n", disk);  
+     exit(1);
+  }
+  print fd or dev to see its value!!!
+
+(1). printf("checking EXT2 FS\n");
+
+     Write C code to check EXT2 FS; if not EXT2 FS: exit
+
+     get ninodes, nblocks (and print their values)
+
+
+(2). Read GD block to get bmap, imap, iblock (and print their values)
+
+(3). init();         // write C code 
+
+(4). mount_root();   // write C code
+
+(5). printf("creating P0 as running process\n");
+
+     WRITE C code to do these:     
+       set running pointer to point at proc[0];
+       set running's cwd   to point at / in memory;
+
+
+(6). while(1){       // command processing loop
+       printf("input command : [ls|cd|pwd|quit] ");
+
+     WRITE C code to do these:
+
+       use fgets() to get user inputs into line[128]
+       kill the \r at end 
+       if (line is an empty string) // if user entered only \r
+          continue;
+
+       Use sscanf() to extract cmd[ ] and pathname[] from line[128]
+       printf("cmd=%s pathname=%s\n", cmd, pathname);
+
+       // execute the cmd
+       if (strcmp(cmd, "ls")==0)
+          ls(pathname);
+       if (strcmp(cmd, "cd")==0)
+          chdir(pathname);
+       if (strcmp(cmd, "pwd")==0)
+          pwd(running->cwd);
+       if (strcmp(cmd, "quit")==0)
+          quit();
+     }
+}
+
+int init()
+{
+   WRITE C code to initialize
+
+   (1).All minode's refCount=0;
+   (2).proc[0]'s pid=1, uid=0, cwd=0, fd[ ]=0;
+       proc[1]'s pid=2, uid=1, cwd=0, fd[ ]=0;
+}
+
+// load root INODE and set root pointer to it
+int mount_root()
+{  
+  printf("mount_root()\n");
+  root = iget(dev, 2);         // Do you understand this?
+}
+ 
+int ls(char *pathname)  // dig out YOUR OLD lab work for ls() code 
+{
+  WRITE C code for these:
+
+    determine initial dev: 
+    if pathname[0]== '/': dev = root->dev;
+    else                : dev = running->cwd->dev;
+
+    convert pathname to (dev, ino);
+    get a MINODE *mip pointing at a minode[ ] with (dev, ino);
+ 
+    
+    if mip->INODE is a file: ls_file(pathname);
+    if mip->INODE is a DIR{
+       step through DIR entries:
+       for each name, ls_file(pathname/name);
+    }
+}
+
+int chdir(pathname)
+{
+  Write C code to do these:
+
+    determine initial dev as in ls()
+    convert pathname to (dev, ino);
+    get a MINODE *mip pointing at (dev, ino) in a minode[ ];
+
+    if mip->INODE is NOT a DIR: reject and print error message;
+
+    if mip->INODE is a DIR{
+       dispose of OLD cwd;
+       set cwd to mip;
+    }
+}   
+ 
+int pwd(running->cwd): YOU WRITE CODE FOR THIS ONE!!!
+
+int quit()
+{
+  for each minode[ ] do {
+      if  minode[ ]'s refCount != 0: 
+          write its INODE back to disk; 
+  }
+  exit(0);  // terminate program
+}
+
+
+======================================================================
+SAMPLE solution:
+
+~samples/P1/p1 with mydisk
