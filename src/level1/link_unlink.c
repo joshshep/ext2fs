@@ -1,7 +1,7 @@
 #include "../../include/level1cmd.h"
 
 int do_link(char *oldFname, char *newFname) {
-  
+
   int dev;
   if (oldFname[0] == '/') {
     v_printf("link: starting at root\n");
@@ -10,25 +10,25 @@ int do_link(char *oldFname, char *newFname) {
     v_printf("link: not starting at root\n");
     dev = running->cwd->dev;
   }
-  
+
   int ino = getino(&dev, oldFname);
   v_printf("link(): oldfname ino=%d\n",ino);
   MINODE *mip = iget(dev, ino);
-  
+
   char *dname = dirname(newFname);
   char *new_bname = basename(newFname);
   v_printf("link(): (new file) dname=\"%s\" ; bname=\"%s\"\n", dname, new_bname);
-  
-  
+
+
   int new_pino = getino(&dev, dname);
   MINODE *new_pmip = iget(dev, new_pino);
-  
+
   if (new_pmip->dev != mip->dev) {
     printf("link: error cannot link across devices\n");
   }
-  
+
   enter_name(new_pmip, ino, new_bname, EXT2_FT_REG_FILE);
-  
+
   INODE * ip = & mip->INODE;
   ip->i_links_count++;
   mip->dirty = 1;
@@ -36,9 +36,9 @@ int do_link(char *oldFname, char *newFname) {
   INODE * new_pip = & new_pmip->INODE;
   new_pip->i_atime = time(0L);
   new_pmip->dirty = 1;
-  
+
   iput(new_pmip);
-  
+
   iput(mip);
   return 0;
 }
@@ -72,13 +72,13 @@ int do_unlink(char *pathname) {
     printf("unlink: error: invalid file mode. Must be REG or LNK\n");
     return -2;
   }
-  
+
   if (!(ip->i_mode & S_IWUSR) || ip->i_uid != running->uid ) {
     printf("unlink: error: the permissions to do not allow that\n");
     iput(mip);
     return -1;
   }
-  
+
   --ip->i_links_count;
   mip->dirty = 1;
   if (ip->i_links_count <= 0) {
@@ -86,7 +86,7 @@ int do_unlink(char *pathname) {
     idealloc(mip->dev, mip->ino);
   }
   iput(mip);
-  
+
   char *dname = dirname(pathname);
   char *bname = basename(pathname);
   int pino = getino(&dev, dname);
@@ -95,7 +95,7 @@ int do_unlink(char *pathname) {
     return -3;
   }
   MINODE *pmip = iget(dev, pino);
-  rm_child(pmip,bname);
+  rm_child_entry(pmip,bname);
   pmip->dirty = 1;
   iput(pmip);
   return 0;

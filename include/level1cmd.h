@@ -77,7 +77,7 @@ int pwd_inline(MINODE *mip);
 
 int truncate(MINODE *mip);
 
-int rm_child(MINODE *pmip, char *name);
+int rm_child_entry(MINODE *pmip, char *name);
 
 int do_chmod(char *permissions, char *filename);
 

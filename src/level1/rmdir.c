@@ -1,12 +1,12 @@
 #include "../../include/level1cmd.h"
 
 // parent mip
-// child ino
-int rm_child(MINODE *pmip, char *name) {
-  INODE * pip = &pmip->INODE; // parent inode pointer
-  for (int blk_index=0; blk_index < 12 && pip->i_block[blk_index]; blk_index++) {
+// child name
+int rm_child_entry(MINODE* pmip, char* name) {
+  INODE* pip = & pmip->INODE; // parent inode pointer
+  for (int blk_index=0; blk_index < 12 && pip->i_block[blk_index]; ++blk_index) {
     int bno = pip->i_block[blk_index];
-    v_printf("i_block[%d] = %d\n",blk_index,bno);
+    v_printf("i_block[%d] = %d\n", blk_index, bno);
     get_block(pmip->dev, bno, dbuf);
 
     dp = (DIR *) dbuf;
@@ -46,27 +46,24 @@ int rm_child(MINODE *pmip, char *name) {
           v_printf("rm_child(): removing from front or middle (not deleting blk)\n");
 
           //get last entry
-          DIR * last_entry = dp;
-          char * cp2 = cp;
+          DIR* last_entry = dp;
+          char* cp2 = cp;
           while (cp2 + last_entry->rec_len < & dbuf[BLKSIZE]) {
             cp2 += last_entry->rec_len;
-            last_entry = (DIR *) cp2;
+            last_entry = (DIR*) cp2;
           }
           v_printf("rmdir: last_entry old rec_len: %d ; ",last_entry->rec_len);
           last_entry->rec_len += dp->rec_len;
           v_printf("new: %d\n",last_entry->rec_len);
 
-          char *start = cp + dp->rec_len;
-          char * end = dbuf + BLKSIZE;
+          char* start = cp + dp->rec_len;
+          char* end = dbuf + BLKSIZE;
           memmove(cp, start, end - start);
 
           put_block(pmip->dev, pip->i_block[blk_index], dbuf);
         }
 
-        //TODO: should we do this here?
-        if (S_ISDIR(ip->i_mode)) {
-          --pip->i_links_count;
-        }
+
 
         pmip->dirty = 1;
         pip->i_mtime = pip->i_atime = time(0L);
@@ -75,7 +72,7 @@ int rm_child(MINODE *pmip, char *name) {
       }
       prev_dp = dp;
       cp += dp->rec_len;
-      dp = (DIR *) cp;
+      dp = (DIR*) cp;
     }
   }
   return -1;
@@ -148,6 +145,8 @@ int myrmdir(char *pathname) {
   v_printf("new links count: %d\n",ip->i_links_count);
   if (ip->i_links_count > 2 || hasChildren(mip)) {
     //dir not empty
+    // the second check is necessary for files that don't increase i_links_count
+    // e.g. reg files
     printf("rmdir: error: directory must be empty\n");
     iput(mip);
     return -4;
@@ -176,10 +175,15 @@ int myrmdir(char *pathname) {
   iput(mip);
 
 
-  if (rm_child(pmip, bname) != 0) {
+  if (rm_child_entry(pmip, bname) != 0) {
     printf("rmdir: error: failed to remove child entry\"%s\"\n",bname);
     return -6;
   }
+
+  if (S_ISDIR(ip->i_mode)) {
+    --(pmip->INODE).i_links_count;
+  }
+
 
 
   iput(pmip);

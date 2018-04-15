@@ -115,17 +115,18 @@ int main(int argc, char *argv[ ]) {
 		// execute the cmd
 		if (strcmp(cmd, "")==0) {
 			continue;
-		} else if ( strcmp(cmd, "menu")==0 ||
-								strcmp(cmd, "help")==0) {
+		} else if (strcmp(cmd, "menu")==0 ||
+		           strcmp(cmd, "help")==0) {
 			print_menu();
-		} else if (strcmp(cmd, "ls")==0) {
+		} else if (strcmp(cmd, "ls")==0 ||
+		           strcmp(cmd, "ll")==0) {
 			ls(arg1);
 		} else if (strcmp(cmd, "cd")==0) {
 			mychdir(arg1);
 		} else if (strcmp(cmd, "pwd")==0) {
 			pwd(running->cwd);
-		} else if ( strcmp(cmd, "quit")==0 ||
-								strcmp(cmd, "exit")==0) {
+		} else if (strcmp(cmd, "quit")==0 ||
+		           strcmp(cmd, "exit")==0) {
 			quit();
 		} else if (strcmp(cmd, "mkdir")==0) {
 			make_dir(arg1);
@@ -150,7 +151,7 @@ int main(int argc, char *argv[ ]) {
 		}
 		/////////////////////////////////////
 		// level 2
-		else if (strcmp(cmd, "pfd")==0) {
+		else if (  strcmp(cmd, "pfd")==0) {
 			pfd();
 		} else if (strcmp(cmd, "cat")==0) {
 			mycat(arg1);
@@ -172,7 +173,7 @@ int main(int argc, char *argv[ ]) {
 		}
 		////////////////////////////////////
 		// level 3
-		else if (strcmp(cmd, "mount")==0) {
+		else if (  strcmp(cmd, "mount")==0) {
 			do_mount(arg1,arg2);
 		} else if (strcmp(cmd, "umount")==0) {
 			umount(arg1);
