@@ -71,5 +71,5 @@ MOUNT root_mnt;
 
 #define EXT2FS_MAGIC (0xEF53)
 
-#define DFLT_DISK_PATH ("disks/mydisk")
+#define DFLT_DISK_PATH ("disks/dirs.img")
 #endif

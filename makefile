@@ -86,11 +86,11 @@ verbose: CFLAGS += -DVERBOSE
 verbose: all
 
 newdisks:
-	cp $(disks_dir)/mydisk_unadult $(disks_dir)/mydisk
-	cp $(disks_dir)/mydisk_unadult mydisk
-	cp $(disks_dir)/diskimage_unadult $(disks_dir)/diskimage
-	cp $(disks_dir)/diskimage_unadult diskimage
-	cp $(disks_dir)/exam_image_unadult $(disks_dir)/exam_image
+	cp $(disks_dir)/dirs_unadult.img $(disks_dir)/dirs.img
+	cp $(disks_dir)/dirs_unadult.img dirs.img
+	cp $(disks_dir)/files_unadult.img $(disks_dir)/files.img
+	cp $(disks_dir)/files_unadult.img files.img
+	
 #concise:
 
 #disk:
