@@ -77,7 +77,7 @@ int mychdir(char * pathname) {
 }
 
 // get's the name of the child of pmip that has ino
-// wites the result to name
+// writes the result to name
 int getChildNameFromIno(MINODE* pmip, int ino, char *name) {
 	// only search the first 12 blocks (direct)
 	INODE *pip = &pmip->INODE;
@@ -108,25 +108,30 @@ int getChildNameFromIno(MINODE* pmip, int ino, char *name) {
 }
 
 int rpwd(MINODE *mip) {
+	// get the parents inode number
 	int pino = search(mip, "..");//getino(&mip->dev, pathname);
 	if (!pino) {
 		printf("pwd: error: couldn't find parent\n");
 	}
 	//v_printf("mip->ino=%d ; pino=%d\n",mip->ino,pino);
 	if (pino != mip->ino) {
+		// the parent isn't the child (i.e. we aren't at the root yet)
 		MINODE *pmip = iget(mip->dev, pino);
+		if (!pmip) {
+			printf("pwd: error: we couldn't find the parent that we just successfully searched for\n");
+			return -1;
+		}
 		char name[MAX_LEN_DIR_NAME];
 		if (getChildNameFromIno(pmip, mip->ino, name) != 0) {
 			//the inode isn't in the parent's directory entries?!
 			printf("pwd: error: can't find child?!\n");
-			return -1;
+			return -2;
 		}
 		//v_printf("name: \"%s\"\n",name);
 		rpwd(pmip);
 
 		printf("/%s",name);
 		iput(pmip);
-	} else {
 	}
 	return 0;
 }
@@ -136,10 +141,9 @@ int pwd_inline(MINODE *mip) {
 	if (mip->ino == pino) {
 		//v_printf("pwd: is root\n");
 		printf("/");
-		return 0;
+	} else {
+		rpwd(mip);
 	}
-
-	rpwd(mip);
 	return 0;
 }
 

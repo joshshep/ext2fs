@@ -1,0 +1,227 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+BBITMAP	include/type.h	34;"	d
+BITS_PER_BLOCK	include/type.h	28;"	d
+BLKSIZE	include/type.h	27;"	d
+BLOCK_SIZE	include/type.h	26;"	d
+BUSY	include/type.h	47;"	d
+CC	makefile	/^CC=gcc$/;"	m
+CFLAGS	makefile	/^CFLAGS=-std=c99 -Wall -O0 -m32# -DVERBOSE# -Iinclude$/;"	m
+DFLT_DISK_PATH	include/globals.h	76;"	d
+DIR	include/type.h	/^typedef struct ext2_dir_entry_2 DIR;    \/\/ need this for new version of e2fs$/;"	t	typeref:struct:ext2_dir_entry_2
+DIRECT_BLK_SIZE	include/globals.h	53;"	d
+DIR_MODE	include/type.h	40;"	d
+DOUBLE_INDIRECT_BLK	include/globals.h	46;"	d
+EXT2FS_MAGIC	include/globals.h	74;"	d
+FILE_MODE	include/type.h	41;"	d
+FREE	include/type.h	46;"	d
+FuncNamePair	src/level1/main.c	/^} FuncNamePair;$/;"	t	typeref:struct:funcNamePair	file:
+GD	include/type.h	/^typedef struct ext2_group_desc  GD;$/;"	t	typeref:struct:ext2_group_desc
+GDBLOCK	include/type.h	33;"	d
+GLOBALS_H	include/globals.h	2;"	d
+IBITMAP	include/type.h	35;"	d
+INCLUDE	makefile	/^INCLUDE=globals.h \\$/;"	m
+INCLUDES	makefile	/^INCLUDES    = $(addprefix $(include_dir)\/,    $(INCLUDE))$/;"	m
+INDIRECT_BLK	include/globals.h	44;"	d
+INDIRECT_BLK_SIZE	include/globals.h	50;"	d
+INODE	include/type.h	/^  INODE INODE;               \/\/ disk inode$/;"	m	struct:Minode
+INODE	include/type.h	/^typedef struct ext2_inode       INODE;$/;"	t	typeref:struct:ext2_inode
+INODEBLOCK	include/type.h	36;"	d
+INODES_PER_BLOCK	include/type.h	29;"	d
+KILLED	include/type.h	48;"	d
+LEVEL1CMD_H	include/level1cmd.h	2;"	d
+LEVEL1OBJ	makefile	/^LEVEL1OBJ = $(LEVEL1SRC:.c=.o)$/;"	m
+LEVEL1OBJS	makefile	/^LEVEL1OBJS  = $(addprefix $(level1_obj_dir)\/, $(LEVEL1OBJ))$/;"	m
+LEVEL1SRC	makefile	/^LEVEL1SRC=main.c \\$/;"	m
+LEVEL2CMD_H	include/level2cmd.h	2;"	d
+LEVEL2OBJ	makefile	/^LEVEL2OBJ = $(LEVEL2SRC:.c=.o)$/;"	m
+LEVEL2OBJS	makefile	/^LEVEL2OBJS  = $(addprefix $(level2_obj_dir)\/, $(LEVEL2OBJ))$/;"	m
+LEVEL2SRC	makefile	/^LEVEL2SRC = open_close_lseek.c \\$/;"	m
+LEVEL3CMD_H	include/level3cmd.h	2;"	d
+LEVEL3OBJ	makefile	/^LEVEL3OBJ = $(LEVEL3SRC:.c=.o)$/;"	m
+LEVEL3OBJS	makefile	/^LEVEL3OBJS  = $(addprefix $(level3_obj_dir)\/, $(LEVEL3OBJ))$/;"	m
+LEVEL3SRC	makefile	/^LEVEL3SRC = mount.c \\$/;"	m
+MAX_ARGS	include/globals.h	39;"	d
+MAX_LEN_ARG	include/globals.h	40;"	d
+MAX_LEN_DIR_NAME	include/globals.h	37;"	d
+MAX_LINE	include/globals.h	38;"	d
+MAX_TM_LEN	src/level1/ls.c	3;"	d	file:
+MIN	include/globals.h	71;"	d
+MINODE	include/type.h	/^} MINODE;$/;"	t	typeref:struct:Minode
+MOUNT	include/type.h	/^} MOUNT;$/;"	t	typeref:struct:Mount
+Minode	include/type.h	/^typedef struct Minode{		$/;"	s
+Mount	include/type.h	/^typedef struct Mount{$/;"	s
+NFD	include/type.h	54;"	d
+NMINODE	include/type.h	51;"	d
+NMOUNT	include/type.h	52;"	d
+NOFT	include/type.h	55;"	d
+NPROC	include/type.h	53;"	d
+NUM_DIRECT_BLK	include/globals.h	43;"	d
+NUM_FUNC_NAME_PAIRS	src/level1/main.c	98;"	d	file:
+NUM_INDIRECT_BLK	include/globals.h	45;"	d
+OFT	include/type.h	/^} OFT;$/;"	t	typeref:struct:Oft
+Oft	include/type.h	/^typedef struct Oft{$/;"	s
+PROC	include/type.h	/^} PROC;$/;"	t	typeref:struct:Proc
+Proc	include/type.h	/^typedef struct Proc{$/;"	s
+ROOT_INODE	include/type.h	37;"	d
+SRCS	makefile	/^SRCS        = $(addprefix $(level1_src_dir)\/, $(LEVEL1SRC))$/;"	m
+SUPER	include/type.h	/^typedef struct ext2_super_block SUPER;$/;"	t	typeref:struct:ext2_super_block
+SUPERBLOCK	include/type.h	32;"	d
+SUPER_MAGIC	include/type.h	42;"	d
+SUPER_USER	include/type.h	43;"	d
+TARGET	makefile	/^TARGET=ext2fs$/;"	m
+TYPE_H	include/type.h	2;"	d
+access_bno_safe	src/level2/read.c	/^int access_bno_safe(int dev, unsigned int *bno) {$/;"	f
+balloc	src/level1/iget_iput_getino.c	/^int balloc(int dev)$/;"	f
+bdealloc	src/level1/iget_iput_getino.c	/^int bdealloc(int dev, int blk) {$/;"	f
+bdealloc_double_indirect	src/level1/util.c	/^int bdealloc_double_indirect(int dev, int double_indirect_bno) {$/;"	f
+bdealloc_indirect	src/level1/util.c	/^int bdealloc_indirect(int dev, int indirect_bno) {$/;"	f
+bin_dir	makefile	/^bin_dir = bin$/;"	m
+bmap	include/globals.h	/^int nblocks, ninodes, bmap, imap, iblock;  \/\/ FS constants$/;"	v
+bmap	include/type.h	/^  int  bmap;$/;"	m	struct:Mount
+buf	include/globals.h	/^char buf[BLKSIZE];              \/\/ define buf1[ ], buf2[ ], etc. as you need$/;"	v
+busy	include/type.h	/^  int  dev, busy;   $/;"	m	struct:Mount
+child	include/type.h	/^  struct Proc *child;$/;"	m	struct:Proc	typeref:struct:Proc::Proc
+close_file	src/level2/open_close_lseek.c	/^int close_file(int fd) {$/;"	f
+clr_bit	src/level1/iget_iput_getino.c	/^int clr_bit(char *buf, int bit)$/;"	f
+cmd	include/globals.h	/^char line[128], cmd[64], pathname[64];$/;"	v
+cp	src/level2/cp.c	/^int cp(char *src, char *dst) {$/;"	f
+creat_file	src/level1/mkdir_creat.c	/^int creat_file(const char * pathname) {$/;"	f
+cwd	include/type.h	/^  struct Minode *cwd;$/;"	m	struct:Proc	typeref:struct:Proc::Minode
+d_printf	include/globals.h	65;"	d
+d_printf	include/globals.h	68;"	d
+dbuf	include/globals.h	/^char dbuf[BLKSIZE];$/;"	v
+decFreeBlocks	src/level1/iget_iput_getino.c	/^int decFreeBlocks(int dev)$/;"	f
+decFreeInodes	src/level1/iget_iput_getino.c	/^int decFreeInodes(int dev)$/;"	f
+dev	include/type.h	/^  int   dev, ino;$/;"	m	struct:Minode
+dev	include/type.h	/^  int  dev, busy;   $/;"	m	struct:Mount
+dirty	include/type.h	/^  int   dirty;$/;"	m	struct:Minode
+disks_dir	makefile	/^disks_dir = disks$/;"	m
+display_cur_mnts	src/level3/mount.c	/^int display_cur_mnts() {$/;"	f
+do_chmod	src/level1/chmod.c	/^int do_chmod(char *permissions, char *fname) {$/;"	f
+do_link	src/level1/link_unlink.c	/^int do_link(char *oldFname, char *newFname) {$/;"	f
+do_mount	src/level3/mount.c	/^int do_mount(char* filesys, char* mnt_pnt) {$/;"	f
+do_readlink	src/level1/symlink_readlink.c	/^int do_readlink(char *pathname) {$/;"	f
+do_stat	src/level1/stat.c	/^int do_stat(char *pathname)$/;"	f
+do_symlink	src/level1/symlink_readlink.c	/^int do_symlink(char *oldName, char * newName) {$/;"	f
+do_touch	src/level1/touch.c	/^int do_touch(char *fname) {$/;"	f
+do_unlink	src/level1/link_unlink.c	/^int do_unlink(char *pathname) {$/;"	f
+dp	include/type.h	/^DIR   *dp; $/;"	v
+enter_name	src/level1/util.c	/^int enter_name(MINODE *pmip, int myino, const char *myname, int file_type) {$/;"	f
+fd	include/type.h	/^  OFT   *fd[NFD];$/;"	m	struct:Proc
+format_time	src/level1/ls.c	/^int format_time(char *buf, time_t epoch_tm) {$/;"	f
+func	src/level1/main.c	/^	int (*func) (char **args);$/;"	m	struct:funcNamePair	file:
+funcNamePair	src/level1/main.c	/^typedef struct funcNamePair {$/;"	s	file:
+getChildNameFromIno	src/level1/cd_pwd.c	/^int getChildNameFromIno(MINODE* pmip, int ino, char *name) {$/;"	f
+getModeStr	src/level1/stat.c	/^void getModeStr(char *destStr, int i_mode)$/;"	f
+getStartDev	src/level1/util.c	/^int getStartDev(const char *pathname) {$/;"	f
+get_block	src/level1/iget_iput_getino.c	/^int get_block(int fd, int blk, char *buf)$/;"	f
+get_ideal_len	src/level1/util.c	/^int get_ideal_len(int len) {$/;"	f
+get_physical_bno	src/level2/read.c	/^int get_physical_bno(MINODE *mip,int lbno) {$/;"	f
+getino	src/level1/iget_iput_getino.c	/^int getino(int *dev, char *pathname)$/;"	f
+gid	include/type.h	/^  int   gid;$/;"	m	struct:Proc
+gp	include/type.h	/^GD    *gp;$/;"	v
+hasChildren	src/level1/rmdir.c	/^int hasChildren(MINODE *mip)$/;"	f
+ialloc	src/level1/iget_iput_getino.c	/^int ialloc(int dev)$/;"	f
+iblock	include/globals.h	/^int nblocks, ninodes, bmap, imap, iblock;  \/\/ FS constants$/;"	v
+iblock	include/type.h	/^  int  iblock;$/;"	m	struct:Mount
+idealloc	src/level1/iget_iput_getino.c	/^int idealloc(int dev, int ino) {$/;"	f
+iget	src/level1/iget_iput_getino.c	/^MINODE *iget(int dev, int ino)$/;"	f
+imap	include/globals.h	/^int nblocks, ninodes, bmap, imap, iblock;  \/\/ FS constants$/;"	v
+imap	include/type.h	/^  int  imap;$/;"	m	struct:Mount
+include_dir	makefile	/^include_dir = include$/;"	m
+init	src/level1/util.c	/^int init() {$/;"	f
+ino	include/type.h	/^  int   dev, ino;$/;"	m	struct:Minode
+inodeptr	include/type.h	/^  struct Minode *inodeptr;$/;"	m	struct:Oft	typeref:struct:Oft::Minode
+ip	include/type.h	/^INODE *ip;$/;"	v
+iput	src/level1/iget_iput_getino.c	/^int iput(MINODE *mip)  \/\/ dispose of a minode[] pointed by mip$/;"	f
+isEXT2fs	src/level3/mount.c	/^int isEXT2fs(int fd) {$/;"	f
+isMounted	src/level3/mount.c	/^int isMounted(char *filesys) {$/;"	f
+level1_obj_dir	makefile	/^level1_obj_dir = bin\/level1$/;"	m
+level1_src_dir	makefile	/^level1_src_dir = src\/level1$/;"	m
+level2_obj_dir	makefile	/^level2_obj_dir = bin\/level2$/;"	m
+level2_src_dir	makefile	/^level2_src_dir = src\/level2$/;"	m
+level3_obj_dir	makefile	/^level3_obj_dir = bin\/level3$/;"	m
+level3_src_dir	makefile	/^level3_src_dir = src\/level3$/;"	m
+line	include/globals.h	/^char line[128], cmd[64], pathname[64];$/;"	v
+ls	src/level1/ls.c	/^int ls(char *pathname) {$/;"	f
+ls_dir	src/level1/ls.c	/^int ls_dir(MINODE *pmip) {$/;"	f
+ls_file	src/level1/ls.c	/^int ls_file(INODE *ip, char *fname) {$/;"	f
+main	src/level1/main.c	/^int main(int argc, char *argv[ ]) {$/;"	f
+make_dir	src/level1/mkdir_creat.c	/^int make_dir(const char * pathname) {$/;"	f
+minode	include/globals.h	/^MINODE minode[NMINODE];        \/\/ global minode[ ] array$/;"	v
+mode	include/type.h	/^  int   mode;$/;"	m	struct:Oft
+mount	include/globals.h	/^MOUNT  mount[NMOUNT];$/;"	v
+mount_name	include/type.h	/^  char   mount_name[64];$/;"	m	struct:Mount
+mount_root	src/level1/util.c	/^int mount_root(int dev) {$/;"	f
+mounted	include/type.h	/^  int   mounted;$/;"	m	struct:Minode
+mounted_inode	include/type.h	/^  struct Minode *mounted_inode;$/;"	m	struct:Mount	typeref:struct:Mount::Minode
+mountptr	include/type.h	/^  struct Mount *mountptr;$/;"	m	struct:Minode	typeref:struct:Minode::Mount
+mv	src/level2/mv.c	/^int mv(char *src, char *dst) {$/;"	f
+my_get_block	src/level3/mount.c	/^int my_get_block(int fd, int blk, char *buf)$/;"	f
+my_lseek	src/level2/open_close_lseek.c	/^int my_lseek(int fd, int pos) {$/;"	f
+mycat	src/level2/cat.c	/^int mycat(char *filename) {$/;"	f
+mychdir	src/level1/cd_pwd.c	/^int mychdir(char * pathname) {$/;"	f
+mycreat	src/level1/mkdir_creat.c	/^int mycreat(MINODE *pmip, const char *name) {$/;"	f
+mymkdir	src/level1/mkdir_creat.c	/^int mymkdir(MINODE *pmip, const char *name) {$/;"	f
+myread	src/level2/read.c	/^int myread(int fd, char *buf, int nbytes) {$/;"	f
+myrmdir	src/level1/rmdir.c	/^int myrmdir(char *pathname) {$/;"	f
+mywrite	src/level2/write.c	/^int mywrite(int fd, char *buf, int nbytes) {$/;"	f
+name	include/type.h	/^  char     name[128];           \/\/ name string of file$/;"	m	struct:Minode
+name	include/type.h	/^  char   name[256]; $/;"	m	struct:Mount
+name	src/level1/main.c	/^	char name[MAX_LINE];$/;"	m	struct:funcNamePair	file:
+nblocks	include/globals.h	/^int nblocks, ninodes, bmap, imap, iblock;  \/\/ FS constants$/;"	v
+nblocks	include/type.h	/^  int  nblocks;$/;"	m	struct:Mount
+next	include/type.h	/^  struct Proc *next;$/;"	m	struct:Proc	typeref:struct:Proc::Proc
+ninodes	include/globals.h	/^int nblocks, ninodes, bmap, imap, iblock;  \/\/ FS constants$/;"	v
+ninodes	include/type.h	/^  int  ninodes;$/;"	m	struct:Mount
+offset	include/type.h	/^  long  offset;$/;"	m	struct:Oft
+oft	include/globals.h	/^OFT    oft[NOFT];$/;"	v
+open_file	src/level2/open_close_lseek.c	/^int open_file(char *pathname, int mode) {$/;"	f
+parent	include/type.h	/^  struct Proc *parent;$/;"	m	struct:Proc	typeref:struct:Proc::Proc
+parseLine	src/level1/util.c	/^int parseLine(char* line, int* argc, char args[MAX_ARGS][MAX_LEN_ARG]) {$/;"	f
+pathname	include/globals.h	/^char line[128], cmd[64], pathname[64];$/;"	v
+pause	src/level1/util.c	/^int pause() {$/;"	f
+pfd	src/level2/open_close_lseek.c	/^int pfd() {$/;"	f
+pid	include/type.h	/^  int   pid;$/;"	m	struct:Proc
+ppid	include/type.h	/^  int   ppid;$/;"	m	struct:Proc
+printGd	src/level1/util.c	/^int printGd(GD *gp) {$/;"	f
+printStrings	src/level1/util.c	/^int printStrings(int argc, char strings[MAX_ARGS][MAX_LEN_ARG]){$/;"	f
+printSuper	src/level1/util.c	/^int printSuper(SUPER *sp) {$/;"	f
+print_menu	src/level1/miscl.c	/^int print_menu() {$/;"	f
+print_prompt	src/level1/miscl.c	/^int print_prompt() {$/;"	f
+proc	include/globals.h	/^PROC   proc[NPROC], *running;  \/\/ PROC; using only proc[0]$/;"	v
+put_block	src/level1/iget_iput_getino.c	/^int put_block(int fd, int blk, char *buf)$/;"	f
+pwd	src/level1/cd_pwd.c	/^int pwd(MINODE *mip) {$/;"	f
+pwd_inline	src/level1/cd_pwd.c	/^int pwd_inline(MINODE *mip) {$/;"	f
+quit	src/level1/util.c	/^int quit() {$/;"	f
+read_file	src/level2/read.c	/^int read_file(int fd, int nbytes) {$/;"	f
+refCount	include/type.h	/^  int   refCount;$/;"	m	struct:Minode
+refCount	include/type.h	/^  int   refCount;$/;"	m	struct:Oft
+rm_child_entry	src/level1/rmdir.c	/^int rm_child_entry(MINODE* pmip, char* name) {$/;"	f
+root	include/globals.h	/^MINODE *root;                  \/\/ root pointer: the \/$/;"	v
+root_mnt	include/globals.h	/^MOUNT root_mnt;$/;"	v
+rpwd	src/level1/cd_pwd.c	/^int rpwd(MINODE *mip) {$/;"	f
+running	include/globals.h	/^PROC   proc[NPROC], *running;  \/\/ PROC; using only proc[0]$/;"	v
+sbuf	include/globals.h	/^char sbuf[BLKSIZE];$/;"	v
+search	src/level1/iget_iput_getino.c	/^int search (MINODE *mip, const char *name)$/;"	f
+secret_root	include/globals.h	/^MINODE secret_root;$/;"	v
+set_bit	src/level1/iget_iput_getino.c	/^int set_bit(char *buf, int bit)$/;"	f
+sibling	include/type.h	/^  struct Proc *sibling;$/;"	m	struct:Proc	typeref:struct:Proc::Proc
+sp	include/type.h	/^SUPER *sp;$/;"	v
+status	include/type.h	/^  int   status;$/;"	m	struct:Proc
+testFunc	src/level1/main.c	/^int testFunc(char **args)$/;"	f
+testFunc2	src/level1/main.c	/^int testFunc2(char **args)$/;"	f
+truncate	src/level1/util.c	/^int truncate(MINODE *mip) {$/;"	f
+tst_bit	src/level1/iget_iput_getino.c	/^int tst_bit(char *buf, int bit)$/;"	f
+uid	include/type.h	/^  int   uid;$/;"	m	struct:Proc
+umount	src/level3/umount.c	/^int umount(char *filesys) {$/;"	f
+updateGlobals	src/level1/iget_iput_getino.c	/^int updateGlobals(int newDev) {$/;"	f
+v_printf	include/globals.h	58;"	d
+v_printf	include/globals.h	61;"	d
+write_file	src/level2/write.c	/^int write_file(int fd, char *str) {$/;"	f
+zero_blk	src/level2/read.c	/^int zero_blk(int dev, int bno) {$/;"	f

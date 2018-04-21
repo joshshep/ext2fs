@@ -36,6 +36,8 @@ MOUNT root_mnt;
 
 #define MAX_LEN_DIR_NAME (128)
 #define MAX_LINE (128)
+#define MAX_ARGS (64)
+#define MAX_LEN_ARG (64)
 
 
 #define NUM_DIRECT_BLK (12)

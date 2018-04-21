@@ -55,7 +55,7 @@ int get_block(int fd, int blk, char * buf);
 int put_block(int fd, int blk, char * buf);
 
 
-int parseLine(char * line, char * cmd, char * arg);
+int parseLine(char* line, int* argc, char args[MAX_ARGS][MAX_LEN_ARG]);
 
 int pwd(MINODE *mip);
 
@@ -87,4 +87,5 @@ int do_stat(char *pathname);
 
 int getStartDev(const char *pathname);
 
+int printStrings(int argc, char strings[MAX_ARGS][MAX_LEN_ARG]);
 #endif

@@ -2,7 +2,28 @@
 #include "../../include/level2cmd.h"
 #include "../../include/level3cmd.h"
 
+typedef struct funcNamePair {
 
+	char name[MAX_LINE];
+	int (*func) (char **args);
+
+} FuncNamePair;
+int testFunc(char **args)
+{
+	if (!args)
+		printf("no args\n");
+	else
+		printf("there are args\n");
+	return 0;
+}
+int testFunc2(char **args)
+{
+	if (!args)
+		printf("no args2\n");
+	else
+		printf("there are args2\n");
+	return 0;
+}
 // run as a.out [diskname]
 int main(int argc, char *argv[ ]) {
 	char * diskname = DFLT_DISK_PATH;
@@ -68,11 +89,55 @@ int main(int argc, char *argv[ ]) {
 
 	secret_root = *root;
 
+	char arg1[MAX_LINE];
+	char arg2[MAX_LINE];
+	char line[MAX_LINE];
+	char cmd[MAX_LINE];
+
+	// this is just a hack to allow for alphabetizing arguments
+	#define NUM_FUNC_NAME_PAIRS (100)
+	FuncNamePair funcNamePairs[NUM_FUNC_NAME_PAIRS] = {
+		{"menu",     print_menu},
+		{"help",     print_menu},
+		{"ls",       ls},
+		{"ll",       ls},
+		{"cd",       mychdir},
+		{"pwd",      pwd},
+		{"quit",     quit},
+		{"exit",     quit},
+		{"mkdir",    make_dir},
+		{"rmdir",    myrmdir},
+		{"creat",    creat_file},
+		{"link",     do_link},
+		{"unlink",   do_unlink},
+		{"symlink",  do_symlink},
+		{"readlink", do_readlink},
+		{"chmod",    do_chmod},
+		{"touch",    do_touch},
+		{"stat",     do_stat},
+		/////////////////////////////////////
+		// level 2
+		{"pfd", pfd},
+		{"cat", mycat},
+		{"mv",  mv},
+		{"cp",  cp},
+		////////////////////////////////////
+		// level 3
+		{"mount",  do_mount},
+		{"umount", umount}
+	};
+	/*
+	printf("Function names:\n");
+	for (int i=0; i<NUM_FUNC_NAME_PAIRS; ++i) {
+		printf("%s\n", funcNamePairs[i].name);
+	}
+	*/
+
+	char args[MAX_ARGS][MAX_LEN_ARG];
+	args[0];
+	args[0][0];
 	while(1) { // command processing loop
-		char arg1[MAX_LINE];
-		char arg2[MAX_LINE];
-		char line[MAX_LINE];
-		char cmd[MAX_LINE];
+
 		line[0] = 0;
 		cmd[0] = 0;
 		arg1[0] = 0;
@@ -89,15 +154,14 @@ int main(int argc, char *argv[ ]) {
 		*/
 
 		fgets(line, MAX_LINE, stdin);
-		sscanf(line, " %s %s %s ", cmd, arg1, arg2);
+		// TODO: portably flush input
+		// get rid of the newline char
+		line[strcspn(line, "\n")] = 0;
+		// first element in args should be the command
+		int argc;
+		parseLine(line, &argc, args);
+		printStrings(argc, args);
 		//parseLine(line, cmd, arg);
-
-		/*
-		// temp hack to avoid seaching for ""
-		if (strcmp(arg,"") == 0) {
-			strcpy(arg,".");
-		}
-		*/
 
 		//Use sscanf() to extract cmd[ ] and pathname[] from line[128]
 		if (cmd[0] != 0) {
