@@ -56,3 +56,6 @@ ext2fs
 # ignore disk images except those that are unadulterated
 *.img
 !*_unadult.img
+
+#ignore the source code consolidated file
+project_src.txt

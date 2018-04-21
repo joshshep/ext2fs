@@ -90,12 +90,15 @@ newdisks:
 	cp $(disks_dir)/dirs_unadult.img dirs.img
 	cp $(disks_dir)/files_unadult.img $(disks_dir)/files.img
 	cp $(disks_dir)/files_unadult.img files.img
-	
+
 #concise:
 
 #disk:
 run: all
 	./$(BINS)
+
+turnin_file:
+	./scripts/get_src_onefile.bash > project_src.txt
 
 clean:
 	rm -rf $(LEVEL1OBJS) $(LEVEL2OBJS) $(LEVEL3OBJS) $(TARGET)
