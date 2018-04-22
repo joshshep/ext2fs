@@ -29,10 +29,10 @@ int main(int argc, char *argv[ ]) {
 	char * diskname = DFLT_DISK_PATH;
 	if (argc > 1) {
 		diskname = argv[1];
-    v_printf("Mounting disk: %s\n",diskname);
+		v_printf("Mounting disk: %s\n",diskname);
 	} else {
-    v_printf("No disk provided... using default: %s\n", diskname);
-  }
+		v_printf("No disk provided... using default: %s\n", diskname);
+	}
 	int dev;
 	if ((dev = open(diskname, O_RDWR)) < 0) {
 		printf("open %s failed\n", diskname);

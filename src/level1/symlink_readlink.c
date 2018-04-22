@@ -1,75 +1,75 @@
 #include "../../include/level1cmd.h"
 
 int do_symlink(char *oldName, char * newName) {
-  int dev;
-  if (newName[0] == '/') {
-    v_printf("do_symlink: starting at root\n");
-    dev = root->dev;
-  } else {
-    v_printf("do_symlink: not starting at root\n");
-    dev = running->cwd->dev;
-  }
+	int dev;
+	if (newName[0] == '/') {
+		v_printf("do_symlink: starting at root\n");
+		dev = root->dev;
+	} else {
+		v_printf("do_symlink: not starting at root\n");
+		dev = running->cwd->dev;
+	}
 
-  char sbuf[MAX_LINE], sbuf2[MAX_LINE];
-  strcpy(sbuf, newName); strcpy(sbuf2, newName);
-  
-  char * new_dname = dirname(sbuf);
+	char sbuf[MAX_LINE], sbuf2[MAX_LINE];
+	strcpy(sbuf, newName); strcpy(sbuf2, newName);
 
-  int new_pino = getino(&dev,new_dname);
-  MINODE * new_pmip = iget(dev, new_pino);
-  INODE * new_pip = & new_pmip->INODE;
+	char * new_dname = dirname(sbuf);
 
-  if (creat_file(sbuf2) != EXIT_SUCCESS) {
-    return -1;
-  }
+	int new_pino = getino(&dev,new_dname);
+	MINODE * new_pmip = iget(dev, new_pino);
+	INODE * new_pip = & new_pmip->INODE;
 
-  int new_ino = getino(&dev, sbuf2);
-  MINODE * new_mip = iget(dev, new_ino);
-  INODE * new_ip = & new_mip->INODE;
+	if (creat_file(sbuf2) != EXIT_SUCCESS) {
+		return -1;
+	}
 
-  new_ip->i_mode = (new_ip->i_mode & 0x0FFF) | 0xA000;
-  new_ip->i_size = strlen(oldName);
+	int new_ino = getino(&dev, sbuf2);
+	MINODE * new_mip = iget(dev, new_ino);
+	INODE * new_ip = & new_mip->INODE;
 
-  v_printf("copying \"%s\" into ip->i_block\n",oldName);
+	new_ip->i_mode = (new_ip->i_mode & 0x0FFF) | 0xA000;
+	new_ip->i_size = strlen(oldName);
 
-  strcpy((char *)new_ip->i_block, oldName);
-  new_mip->dirty = 1;
+	v_printf("copying \"%s\" into ip->i_block\n",oldName);
 
-  new_pip->i_atime = time(0L);
-  new_pmip->dirty = 1;
+	strcpy((char *)new_ip->i_block, oldName);
+	new_mip->dirty = 1;
 
-  iput(new_mip);
+	new_pip->i_atime = time(0L);
+	new_pmip->dirty = 1;
+
+	iput(new_mip);
 
 
-  iput(new_pmip);
+	iput(new_pmip);
 
-  return 0;
+	return 0;
 }
 
 int do_readlink(char *pathname) {
-  int dev;
-  if (pathname[0] == '/') {
-    v_printf("readlink: starting at root\n");
-    dev = root->dev;
-  } else {
-    v_printf("readlink: not starting at root\n");
-    dev = running->cwd->dev;
-  }
-  int ino = getino(&dev, pathname);
-  MINODE * mip = iget(dev, ino);
-  INODE * ip = & mip->INODE;
+	int dev;
+	if (pathname[0] == '/') {
+		v_printf("readlink: starting at root\n");
+		dev = root->dev;
+	} else {
+		v_printf("readlink: not starting at root\n");
+		dev = running->cwd->dev;
+	}
+	int ino = getino(&dev, pathname);
+	MINODE * mip = iget(dev, ino);
+	INODE * ip = & mip->INODE;
 
-  if (!S_ISLNK(ip->i_mode)) {
-    v_printf("readlink: error \"%s\" is not a symlink\n",pathname);
-    iput(mip);
-    return -1;
-  }
-  v_printf("\"%s\" is symlink\n", pathname);
-  printf("contents:\n");
+	if (!S_ISLNK(ip->i_mode)) {
+		v_printf("readlink: error \"%s\" is not a symlink\n",pathname);
+		iput(mip);
+		return -1;
+	}
+	v_printf("\"%s\" is symlink\n", pathname);
+	printf("contents:\n");
 
-  //tricky tricky Mr. KC
-  printf("%s\n",(char *) ip->i_block);
+	//tricky tricky Mr. KC
+	printf("%s\n",(char *) ip->i_block);
 
-  iput(mip);
-  return 0;
+	iput(mip);
+	return 0;
 }

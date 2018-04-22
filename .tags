@@ -75,7 +75,7 @@ SUPER_MAGIC	include/type.h	42;"	d
 SUPER_USER	include/type.h	43;"	d
 TARGET	makefile	/^TARGET=ext2fs$/;"	m
 TYPE_H	include/type.h	2;"	d
-access_bno_safe	src/level2/read.c	/^int access_bno_safe(int dev, unsigned int *bno) {$/;"	f
+access_bno_safe	src/level2/read.c	/^int access_bno_safe(int dev, unsigned int* bno) {$/;"	f
 balloc	src/level1/iget_iput_getino.c	/^int balloc(int dev)$/;"	f
 bdealloc	src/level1/iget_iput_getino.c	/^int bdealloc(int dev, int blk) {$/;"	f
 bdealloc_double_indirect	src/level1/util.c	/^int bdealloc_double_indirect(int dev, int double_indirect_bno) {$/;"	f
@@ -121,7 +121,7 @@ getModeStr	src/level1/stat.c	/^void getModeStr(char *destStr, int i_mode)$/;"	f
 getStartDev	src/level1/util.c	/^int getStartDev(const char *pathname) {$/;"	f
 get_block	src/level1/iget_iput_getino.c	/^int get_block(int fd, int blk, char *buf)$/;"	f
 get_ideal_len	src/level1/util.c	/^int get_ideal_len(int len) {$/;"	f
-get_physical_bno	src/level2/read.c	/^int get_physical_bno(MINODE *mip,int lbno) {$/;"	f
+get_physical_bno	src/level2/read.c	/^int get_physical_bno(MINODE* mip, int lbno) {$/;"	f
 getino	src/level1/iget_iput_getino.c	/^int getino(int *dev, char *pathname)$/;"	f
 gid	include/type.h	/^  int   gid;$/;"	m	struct:Proc
 gp	include/type.h	/^GD    *gp;$/;"	v
@@ -168,9 +168,9 @@ mycat	src/level2/cat.c	/^int mycat(char *filename) {$/;"	f
 mychdir	src/level1/cd_pwd.c	/^int mychdir(char * pathname) {$/;"	f
 mycreat	src/level1/mkdir_creat.c	/^int mycreat(MINODE *pmip, const char *name) {$/;"	f
 mymkdir	src/level1/mkdir_creat.c	/^int mymkdir(MINODE *pmip, const char *name) {$/;"	f
-myread	src/level2/read.c	/^int myread(int fd, char *buf, int nbytes) {$/;"	f
+myread	src/level2/read.c	/^int myread(int fd, char* buf, int nbytes) {$/;"	f
 myrmdir	src/level1/rmdir.c	/^int myrmdir(char *pathname) {$/;"	f
-mywrite	src/level2/write.c	/^int mywrite(int fd, char *buf, int nbytes) {$/;"	f
+mywrite	src/level2/write.c	/^int mywrite(int fd, char* buf, int nbytes) {$/;"	f
 name	include/type.h	/^  char     name[128];           \/\/ name string of file$/;"	m	struct:Minode
 name	include/type.h	/^  char   name[256]; $/;"	m	struct:Mount
 name	src/level1/main.c	/^	char name[MAX_LINE];$/;"	m	struct:funcNamePair	file:
@@ -223,5 +223,5 @@ umount	src/level3/umount.c	/^int umount(char *filesys) {$/;"	f
 updateGlobals	src/level1/iget_iput_getino.c	/^int updateGlobals(int newDev) {$/;"	f
 v_printf	include/globals.h	58;"	d
 v_printf	include/globals.h	61;"	d
-write_file	src/level2/write.c	/^int write_file(int fd, char *str) {$/;"	f
+write_file	src/level2/write.c	/^int write_file(int fd, char* str) {$/;"	f
 zero_blk	src/level2/read.c	/^int zero_blk(int dev, int bno) {$/;"	f

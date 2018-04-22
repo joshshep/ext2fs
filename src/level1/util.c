@@ -169,7 +169,7 @@ int enter_name(MINODE *pmip, int myino, const char *myname, int file_type) {
 		int last_rec_ideal_len = get_ideal_len(dp->name_len);
 		int space_remaining = dp->rec_len - last_rec_ideal_len;
 		v_printf("new_rec_len: %d ; space_remaining: %d\n",new_rec_len,
-																			space_remaining);
+		                                                   space_remaining);
 		if (space_remaining >= new_rec_len) {
 			//there's space in this block so we can add it here
 			v_printf("enter_name(): we can add an entry in this block!\n");

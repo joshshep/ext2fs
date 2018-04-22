@@ -102,12 +102,12 @@ int balloc(int dev)
 
 	for (i=0; i < nblocks; i++){
 		if (tst_bit(buf, i)==0){
-			 set_bit(buf,i);
-			 decFreeBlocks(dev);
+			set_bit(buf,i);
+			decFreeBlocks(dev);
 
-			 put_block(dev, bmap, buf);
+			put_block(dev, bmap, buf);
 
-			 return i+1;
+			return i+1;
 		}
 	}
 	return 0;
@@ -166,9 +166,9 @@ MINODE *iget(int dev, int ino)
 	for (i=0; i < NMINODE; i++){
 		mip = &minode[i];
 		if (mip->refCount && mip->dev == dev && mip->ino == ino){
-			 mip->refCount++;
-			 //v_printf("found [%d %d] as minode[%d] in core\n", dev, ino, i);
-			 return mip;
+			mip->refCount++;
+			//v_printf("found [%d %d] as minode[%d] in core\n", dev, ino, i);
+			return mip;
 		}
 	}
 	for (i=0; i < NMINODE; i++){
@@ -236,7 +236,7 @@ int search (MINODE *mip, const char *name)
 			strncpy(sbuf, dp->name, dp->name_len);
 			sbuf[dp->name_len] = 0;
 			v_printf("%4d %4d %4d %s\n",
-							dp->inode, dp->rec_len, dp->name_len, sbuf);
+			         dp->inode, dp->rec_len, dp->name_len, sbuf);
 			if (!strcmp(sbuf,name)) {
 				// found a match!
 				return dp->inode;

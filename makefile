@@ -22,7 +22,6 @@ LEVEL1SRC=main.c \
           util.c
 
 LEVEL2SRC = open_close_lseek.c \
-            opendir_readdir.c \
             read.c \
             write.c \
             cat.c \
