@@ -102,7 +102,8 @@ int ls_dir(MINODE *pmip) {
 }
 
 // dig out YOUR OLD lab work for ls() code
-int ls(char *pathname) {
+int cmd_ls(int argc, char** args) {
+	char* pathname = args[1];
 	int dev = getStartDev(pathname);
 	char sbuf[MAX_LINE];
 	strcpy(sbuf, pathname);

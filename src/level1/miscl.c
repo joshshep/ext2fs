@@ -1,6 +1,7 @@
 #include "../../include/level1cmd.h"
 
-int print_menu() {
+int cmd_print_menu(int argc, char** args) {
+	
 	printf("~~~~~~~~~commands~~~~~~~~~~\n");
 	printf("level 1: menu|ls|cd|pwd|quit|mkdir|rmdir|creat|link|unlink|symlink|readlink\n");
 	printf("         touch|chmod\n");

@@ -4,26 +4,11 @@
 
 typedef struct funcNamePair {
 
-	char name[MAX_LINE];
-	int (*func) (char **args);
+	char name[MAX_LEN_ARG];
+	int (*func) (int argc, char **args);
 
 } FuncNamePair;
-int testFunc(char **args)
-{
-	if (!args)
-		printf("no args\n");
-	else
-		printf("there are args\n");
-	return 0;
-}
-int testFunc2(char **args)
-{
-	if (!args)
-		printf("no args2\n");
-	else
-		printf("there are args2\n");
-	return 0;
-}
+
 // run as a.out [diskname]
 int main(int argc, char *argv[ ]) {
 	char * diskname = DFLT_DISK_PATH;
@@ -89,42 +74,39 @@ int main(int argc, char *argv[ ]) {
 
 	secret_root = *root;
 
-	char arg1[MAX_LINE];
-	char arg2[MAX_LINE];
-	char line[MAX_LINE];
-	char cmd[MAX_LINE];
+
 
 	// this is just a hack to allow for alphabetizing arguments
 	#define NUM_FUNC_NAME_PAIRS (100)
 	FuncNamePair funcNamePairs[NUM_FUNC_NAME_PAIRS] = {
-		{"menu",     print_menu},
-		{"help",     print_menu},
-		{"ls",       ls},
-		{"ll",       ls},
-		{"cd",       mychdir},
-		{"pwd",      pwd},
-		{"quit",     quit},
-		{"exit",     quit},
-		{"mkdir",    make_dir},
-		{"rmdir",    myrmdir},
-		{"creat",    creat_file},
-		{"link",     do_link},
-		{"unlink",   do_unlink},
-		{"symlink",  do_symlink},
-		{"readlink", do_readlink},
-		{"chmod",    do_chmod},
-		{"touch",    do_touch},
-		{"stat",     do_stat},
+		{"menu",     cmd_print_menu},
+		{"help",     cmd_print_menu},
+		{"ls",       cmd_ls},
+		{"ll",       cmd_ls},
+		{"cd",       cmd_cd},
+		{"pwd",      cmd_pwd},
+		{"quit",     cmd_quit},
+		{"exit",     cmd_quit},
+		{"mkdir",    cmd_mkdir},
+		{"rmdir",    cmd_rmdir},
+		{"creat",    cmd_creat},
+		{"link",     cmd_link},
+		{"unlink",   cmd_unlink},
+		{"symlink",  cmd_symlink},
+		{"readlink", cmd_readlink},
+		{"chmod",    cmd_chmod},
+		{"touch",    cmd_touch},
+		{"stat",     cmd_stat},
 		/////////////////////////////////////
 		// level 2
-		{"pfd", pfd},
-		{"cat", mycat},
-		{"mv",  mv},
-		{"cp",  cp},
+		{"pfd", cmd_pfd},
+		{"cat", cmd_cat},
+		{"mv",  cmd_mv},
+		{"cp",  cmd_cp},
 		////////////////////////////////////
 		// level 3
-		{"mount",  do_mount},
-		{"umount", umount}
+		{"mount",  cmd_mount},
+		{"umount", cmd_umount}
 	};
 	/*
 	printf("Function names:\n");
@@ -133,11 +115,20 @@ int main(int argc, char *argv[ ]) {
 	}
 	*/
 
-	char args[MAX_ARGS][MAX_LEN_ARG];
-	args[0];
-	args[0][0];
-	while(1) { // command processing loop
+	// allocate the memory for our arguments
+	// TODO: should we malloc arguments individually and every loop?
+	//       i.e. instead of allocating them here in a for loop, allocate them in
+	//       parseLine()
+	char** args = (char**) malloc(MAX_ARGS);
+	for (int iarg=0; iarg<MAX_ARGS; ++iarg) {
+		args[iarg] = (char*) malloc(MAX_LEN_ARG);
+	}
 
+	while(1) { // command processing loop
+		char arg1[MAX_LINE];
+		char arg2[MAX_LINE];
+		char line[MAX_LINE];
+		char cmd[MAX_LINE];
 		line[0] = 0;
 		cmd[0] = 0;
 		arg1[0] = 0;
@@ -163,89 +154,25 @@ int main(int argc, char *argv[ ]) {
 		printStrings(argc, args);
 		//parseLine(line, cmd, arg);
 
-		//Use sscanf() to extract cmd[ ] and pathname[] from line[128]
-		if (cmd[0] != 0) {
-			v_printf("cmd=\"%s\"",cmd);
-			if (arg1[0] != 0) {
-				v_printf(" arg1=\"%s\"",arg1);
-				if (arg2[0] != 0) {
-					v_printf(" arg2=\"%s\"",arg2);
-				}
-			}
-			v_printf("\n");
-		}
-
-
-		// execute the cmd
-		if (strcmp(cmd, "")==0) {
+		// run the function that corresponds to the input string command
+		if (!argc) {
 			continue;
-		} else if (strcmp(cmd, "menu")==0 ||
-		           strcmp(cmd, "help")==0) {
-			print_menu();
-		} else if (strcmp(cmd, "ls")==0 ||
-		           strcmp(cmd, "ll")==0) {
-			ls(arg1);
-		} else if (strcmp(cmd, "cd")==0) {
-			mychdir(arg1);
-		} else if (strcmp(cmd, "pwd")==0) {
-			pwd(running->cwd);
-		} else if (strcmp(cmd, "quit")==0 ||
-		           strcmp(cmd, "exit")==0) {
-			quit();
-		} else if (strcmp(cmd, "mkdir")==0) {
-			make_dir(arg1);
-		} else if (strcmp(cmd, "rmdir")==0) {
-			myrmdir(arg1);
-		} else if (strcmp(cmd, "creat")==0) {
-			creat_file(arg1);
-		} else if (strcmp(cmd, "link")==0) {
-			do_link(arg1, arg2);
-		} else if (strcmp(cmd, "unlink")==0) {
-			do_unlink(arg1);
-		} else if (strcmp(cmd, "symlink")==0) {
-			do_symlink(arg1,arg2);
-		} else if (strcmp(cmd, "readlink")==0) {
-			do_readlink(arg1);
-		} else if (strcmp(cmd, "chmod")==0) {
-			do_chmod(arg1,arg2);
-		} else if (strcmp(cmd, "touch")==0) {
-			do_touch(arg1);
-		} else if (strcmp(cmd, "stat")==0) {
-			do_stat(arg1);
 		}
-		/////////////////////////////////////
-		// level 2
-		else if (  strcmp(cmd, "pfd")==0) {
-			pfd();
-		} else if (strcmp(cmd, "cat")==0) {
-			mycat(arg1);
-		} else if (strcmp(cmd, "open")==0) {
-			//do_open(arg1, arg2); // open for read
-		} else if (strcmp(cmd, "read")==0) {
-			//do_read(arg1,arg2);
-		} else if (strcmp(cmd, "write")==0) {
-			//do_write(arg1,arg2);
-		} else if (strcmp(cmd, "close")==0) {
-			//close_file(arg1);
-			//do_close(arg1);
-		} else if (strcmp(cmd, "lseek")==0) {
-			//do_lseek(arg1,arg2);
-		} else if (strcmp(cmd, "mv")==0) {
-			mv(arg1,arg2);
-		} else if (strcmp(cmd, "cp")==0) {
-			cp(arg1,arg2);
+		// TODO: sort then binary search (or we could hash)
+		for (int icmd=0; icmd< NUM_FUNC_NAME_PAIRS; ++icmd) {
+			if (funcNamePairs[icmd].name[0] == 0) {
+				break;
+			}
+			if (strcmp(funcNamePairs[icmd].name, args[0]) == 0) {
+				funcNamePairs[icmd].func(argc, args);
+				break;
+			}
 		}
-		////////////////////////////////////
-		// level 3
-		else if (  strcmp(cmd, "mount")==0) {
-			do_mount(arg1,arg2);
-		} else if (strcmp(cmd, "umount")==0) {
-			umount(arg1);
-		} else {
-			printf("%s: command not found\n",cmd);
-		}
-
 	}
+	for (int iarg=0; iarg<MAX_ARGS; ++iarg) {
+		free(args[iarg]);
+	}
+	free(args);
 
 	return 0;
 }

@@ -113,7 +113,7 @@ int pause() {
 	return 0;
 }
 
-int printStrings(int argc, char strings[MAX_ARGS][MAX_LEN_ARG]){
+int printStrings(int argc, char** strings){
 	for (int i=0; i<argc; ++i) {
 		printf("\"%s\"\n",strings[i]);
 	}
@@ -126,7 +126,7 @@ For now, the most command arguments is MAX_ARGS - 1 (minus 1 because of the comm
 and the longest command argement is MAX_LEN_ARG
 Note: line *will* be edited
 */
-int parseLine(char* line, int* argc, char args[MAX_ARGS][MAX_LEN_ARG]) {
+int parseLine(char* line, int* argc, char** args) {
 	char* tok;
 	int iarg = 0;
 	tok = strtok(line, " ");

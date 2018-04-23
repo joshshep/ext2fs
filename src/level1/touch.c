@@ -1,7 +1,12 @@
 #include "../../include/level1cmd.h"
 
-int do_touch(char *fname) {
-	v_printf("touch: filename \"%s\"\n",fname);
+int cmd_readlink(int argc, char** args) {
+	if (argc < 2) {
+		printf("touch: error: too few arguments\n");
+		return -1;
+	}
+	char* fname = args[1];
+
 	int dev = getStartDev(fname);
 	char sbuf[MAX_LINE];
 	strcpy(sbuf, fname);

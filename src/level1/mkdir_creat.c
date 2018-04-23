@@ -55,7 +55,18 @@ int mymkdir(MINODE *pmip, const char *name) {
 	return 0;
 }
 
-int make_dir(const char * pathname) {
+/*
+
+TODO: make multiple directories
+
+*/
+int cmd_mkdir(int argc, char** args) {
+	if (argc < 2) {
+		printf("mkdir: error: too few arguments\n");
+		return -1;
+	}
+	char* pathname = args[1];
+
 	int dev = getStartDev(pathname);
 	char bname_buf[MAX_LINE];
 	char dname_buf[MAX_LINE];
@@ -128,7 +139,13 @@ int mycreat(MINODE *pmip, const char *name) {
 	return 0;
 }
 
-int creat_file(const char * pathname) {
+int cmd_creat(int argc, char** args) {
+	if (argc < 2) {
+		printf("creat: error: too few arguments\n");
+		return -1;
+	}
+	char* pathname = args[1];
+	
 	int dev = getStartDev(pathname);
 	char dname_buf[MAX_LINE], bname_buf[MAX_LINE];
 	strcpy(dname_buf, pathname);

@@ -1,6 +1,15 @@
 #include "../../include/level1cmd.h"
 
-int do_chmod(char *permissions, char *fname) {
+/*
+chmod multiple files
+*/
+int cmd_chmod(int argc, char** args) {
+	if (argc < 3) {
+		printf("chmod: error: too few arguments\n");
+		return -1;
+	}
+	char *permissions = args[1];
+	char *fname       = args[2];
 	v_printf("chmod: permissions=\"%s\" fname=\"%s\"\n",permissions, fname);
 
 	int dev = getStartDev(fname);

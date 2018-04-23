@@ -9,6 +9,24 @@
 
 
 
+//commands
+int cmd_print_menu(int argc, char** args);
+int cmd_ls(int argc, char** args);
+int cmd_cd(int argc, char** args);
+int cmd_pwd(int argc, char** args);
+int cmd_quit(int argc, char** args);
+int cmd_mkdir(int argc, char** args);
+int cmd_rmdir(int argc, char** args);
+int cmd_creat(int argc, char** args);
+int cmd_link(int argc, char** args);
+int cmd_unlink(int argc, char** args);
+int cmd_symlink(int argc, char** args);
+int cmd_readlink(int argc, char** args);
+int cmd_chmod(int argc, char** args);
+int cmd_touch(int argc, char** args);
+int cmd_stat(int argc, char** args);
+
+
 // function prototypes
 
 int search (MINODE *mip, const char *name);
@@ -23,25 +41,10 @@ int init();
 
 int mount_root(int dev);
 
-int ls(char *pathname);
 
-int mychdir(char * pathname);
 
-int quit();
 
-int make_dir(const char * pathname);
 
-int myrmdir(char * pathname);
-
-int creat_file(const char *pathname);
-
-int do_link(char * oldFile, char * newFile);
-
-int do_unlink(char * pathname);
-
-int do_symlink(char * oldFile, char * newFile);
-
-int do_readlink(char *pathname);
 
 int getino(int *dev, char * pathname);
 
@@ -55,9 +58,6 @@ int get_block(int fd, int blk, char * buf);
 int put_block(int fd, int blk, char * buf);
 
 
-int parseLine(char* line, int* argc, char args[MAX_ARGS][MAX_LEN_ARG]);
-
-int pwd(MINODE *mip);
 
 int ialloc(int dev);
 
@@ -79,13 +79,10 @@ int truncate(MINODE *mip);
 
 int rm_child_entry(MINODE *pmip, char *name);
 
-int do_chmod(char *permissions, char *filename);
-
-int do_touch(char *filename);
-
-int do_stat(char *pathname);
-
 int getStartDev(const char *pathname);
 
-int printStrings(int argc, char strings[MAX_ARGS][MAX_LEN_ARG]);
+int printStrings(int argc, char** strings);
+
+int parseLine(char* line, int* argc, char** args);
+
 #endif

@@ -1,6 +1,15 @@
 #include "../../include/level1cmd.h"
 
-int do_link(char *oldFname, char *newFname) {
+int cmd_link(int argc, char** args) {
+	if (argc > 3) {
+		printf("link: error: too many arguments\n");
+		return -1;
+	} else if (argc < 3) {
+		printf("link: error: too few arguments\n");
+		return -1;
+	}
+	char* oldFname = args[1];
+	char* newFname = args[2];
 
 	int dev;
 	if (oldFname[0] == '/') {

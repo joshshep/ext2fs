@@ -61,7 +61,7 @@ NMOUNT	include/type.h	52;"	d
 NOFT	include/type.h	55;"	d
 NPROC	include/type.h	53;"	d
 NUM_DIRECT_BLK	include/globals.h	43;"	d
-NUM_FUNC_NAME_PAIRS	src/level1/main.c	98;"	d	file:
+NUM_FUNC_NAME_PAIRS	src/level1/main.c	80;"	d	file:
 NUM_INDIRECT_BLK	include/globals.h	45;"	d
 OFT	include/type.h	/^} OFT;$/;"	t	typeref:struct:Oft
 Oft	include/type.h	/^typedef struct Oft{$/;"	s
@@ -89,8 +89,19 @@ child	include/type.h	/^  struct Proc *child;$/;"	m	struct:Proc	typeref:struct:Pr
 close_file	src/level2/open_close_lseek.c	/^int close_file(int fd) {$/;"	f
 clr_bit	src/level1/iget_iput_getino.c	/^int clr_bit(char *buf, int bit)$/;"	f
 cmd	include/globals.h	/^char line[128], cmd[64], pathname[64];$/;"	v
+cmd_cd	src/level1/cd_pwd.c	/^int cmd_cd(int argc, char** args) {$/;"	f
+cmd_chmod	src/level1/chmod.c	/^int cmd_chmod(int argc, char** args) {$/;"	f
+cmd_creat	src/level1/mkdir_creat.c	/^int cmd_creat(int argc, char** args) {$/;"	f
+cmd_link	src/level1/link_unlink.c	/^int cmd_link(int argc, char** args) {$/;"	f
+cmd_ls	src/level1/ls.c	/^int cmd_ls(int argc, char** args) {$/;"	f
+cmd_mkdir	src/level1/mkdir_creat.c	/^int cmd_mkdir(int argc, char** args) {$/;"	f
+cmd_print_menu	src/level1/miscl.c	/^int cmd_print_menu(int argc, char** args) {$/;"	f
+cmd_pwd	src/level1/cd_pwd.c	/^int cmd_pwd(int argc, char** args) {$/;"	f
+cmd_readlink	src/level1/symlink_readlink.c	/^int cmd_readlink(int argc, char** args) {$/;"	f
+cmd_readlink	src/level1/touch.c	/^int cmd_readlink(int argc, char** args) {$/;"	f
+cmd_rmdir	src/level1/rmdir.c	/^int cmd_rmdir(int argc, char** args) {$/;"	f
+cmd_stat	src/level1/stat.c	/^int cmd_stat(int argc, char** args) {$/;"	f
 cp	src/level2/cp.c	/^int cp(char *src, char *dst) {$/;"	f
-creat_file	src/level1/mkdir_creat.c	/^int creat_file(const char * pathname) {$/;"	f
 cwd	include/type.h	/^  struct Minode *cwd;$/;"	m	struct:Proc	typeref:struct:Proc::Minode
 d_printf	include/globals.h	65;"	d
 d_printf	include/globals.h	68;"	d
@@ -102,19 +113,13 @@ dev	include/type.h	/^  int  dev, busy;   $/;"	m	struct:Mount
 dirty	include/type.h	/^  int   dirty;$/;"	m	struct:Minode
 disks_dir	makefile	/^disks_dir = disks$/;"	m
 display_cur_mnts	src/level3/mount.c	/^int display_cur_mnts() {$/;"	f
-do_chmod	src/level1/chmod.c	/^int do_chmod(char *permissions, char *fname) {$/;"	f
-do_link	src/level1/link_unlink.c	/^int do_link(char *oldFname, char *newFname) {$/;"	f
 do_mount	src/level3/mount.c	/^int do_mount(char* filesys, char* mnt_pnt) {$/;"	f
-do_readlink	src/level1/symlink_readlink.c	/^int do_readlink(char *pathname) {$/;"	f
-do_stat	src/level1/stat.c	/^int do_stat(char *pathname)$/;"	f
-do_symlink	src/level1/symlink_readlink.c	/^int do_symlink(char *oldName, char * newName) {$/;"	f
-do_touch	src/level1/touch.c	/^int do_touch(char *fname) {$/;"	f
 do_unlink	src/level1/link_unlink.c	/^int do_unlink(char *pathname) {$/;"	f
 dp	include/type.h	/^DIR   *dp; $/;"	v
 enter_name	src/level1/util.c	/^int enter_name(MINODE *pmip, int myino, const char *myname, int file_type) {$/;"	f
 fd	include/type.h	/^  OFT   *fd[NFD];$/;"	m	struct:Proc
 format_time	src/level1/ls.c	/^int format_time(char *buf, time_t epoch_tm) {$/;"	f
-func	src/level1/main.c	/^	int (*func) (char **args);$/;"	m	struct:funcNamePair	file:
+func	src/level1/main.c	/^	int (*func) (int argc, char **args);$/;"	m	struct:funcNamePair	file:
 funcNamePair	src/level1/main.c	/^typedef struct funcNamePair {$/;"	s	file:
 getChildNameFromIno	src/level1/cd_pwd.c	/^int getChildNameFromIno(MINODE* pmip, int ino, char *name) {$/;"	f
 getModeStr	src/level1/stat.c	/^void getModeStr(char *destStr, int i_mode)$/;"	f
@@ -148,11 +153,9 @@ level2_src_dir	makefile	/^level2_src_dir = src\/level2$/;"	m
 level3_obj_dir	makefile	/^level3_obj_dir = bin\/level3$/;"	m
 level3_src_dir	makefile	/^level3_src_dir = src\/level3$/;"	m
 line	include/globals.h	/^char line[128], cmd[64], pathname[64];$/;"	v
-ls	src/level1/ls.c	/^int ls(char *pathname) {$/;"	f
 ls_dir	src/level1/ls.c	/^int ls_dir(MINODE *pmip) {$/;"	f
 ls_file	src/level1/ls.c	/^int ls_file(INODE *ip, char *fname) {$/;"	f
 main	src/level1/main.c	/^int main(int argc, char *argv[ ]) {$/;"	f
-make_dir	src/level1/mkdir_creat.c	/^int make_dir(const char * pathname) {$/;"	f
 minode	include/globals.h	/^MINODE minode[NMINODE];        \/\/ global minode[ ] array$/;"	v
 mode	include/type.h	/^  int   mode;$/;"	m	struct:Oft
 mount	include/globals.h	/^MOUNT  mount[NMOUNT];$/;"	v
@@ -165,15 +168,13 @@ mv	src/level2/mv.c	/^int mv(char *src, char *dst) {$/;"	f
 my_get_block	src/level3/mount.c	/^int my_get_block(int fd, int blk, char *buf)$/;"	f
 my_lseek	src/level2/open_close_lseek.c	/^int my_lseek(int fd, int pos) {$/;"	f
 mycat	src/level2/cat.c	/^int mycat(char *filename) {$/;"	f
-mychdir	src/level1/cd_pwd.c	/^int mychdir(char * pathname) {$/;"	f
 mycreat	src/level1/mkdir_creat.c	/^int mycreat(MINODE *pmip, const char *name) {$/;"	f
 mymkdir	src/level1/mkdir_creat.c	/^int mymkdir(MINODE *pmip, const char *name) {$/;"	f
 myread	src/level2/read.c	/^int myread(int fd, char* buf, int nbytes) {$/;"	f
-myrmdir	src/level1/rmdir.c	/^int myrmdir(char *pathname) {$/;"	f
 mywrite	src/level2/write.c	/^int mywrite(int fd, char* buf, int nbytes) {$/;"	f
 name	include/type.h	/^  char     name[128];           \/\/ name string of file$/;"	m	struct:Minode
 name	include/type.h	/^  char   name[256]; $/;"	m	struct:Mount
-name	src/level1/main.c	/^	char name[MAX_LINE];$/;"	m	struct:funcNamePair	file:
+name	src/level1/main.c	/^	char name[MAX_LEN_ARG];$/;"	m	struct:funcNamePair	file:
 nblocks	include/globals.h	/^int nblocks, ninodes, bmap, imap, iblock;  \/\/ FS constants$/;"	v
 nblocks	include/type.h	/^  int  nblocks;$/;"	m	struct:Mount
 next	include/type.h	/^  struct Proc *next;$/;"	m	struct:Proc	typeref:struct:Proc::Proc
@@ -183,20 +184,18 @@ offset	include/type.h	/^  long  offset;$/;"	m	struct:Oft
 oft	include/globals.h	/^OFT    oft[NOFT];$/;"	v
 open_file	src/level2/open_close_lseek.c	/^int open_file(char *pathname, int mode) {$/;"	f
 parent	include/type.h	/^  struct Proc *parent;$/;"	m	struct:Proc	typeref:struct:Proc::Proc
-parseLine	src/level1/util.c	/^int parseLine(char* line, int* argc, char args[MAX_ARGS][MAX_LEN_ARG]) {$/;"	f
+parseLine	src/level1/util.c	/^int parseLine(char* line, int* argc, char** args) {$/;"	f
 pathname	include/globals.h	/^char line[128], cmd[64], pathname[64];$/;"	v
 pause	src/level1/util.c	/^int pause() {$/;"	f
 pfd	src/level2/open_close_lseek.c	/^int pfd() {$/;"	f
 pid	include/type.h	/^  int   pid;$/;"	m	struct:Proc
 ppid	include/type.h	/^  int   ppid;$/;"	m	struct:Proc
 printGd	src/level1/util.c	/^int printGd(GD *gp) {$/;"	f
-printStrings	src/level1/util.c	/^int printStrings(int argc, char strings[MAX_ARGS][MAX_LEN_ARG]){$/;"	f
+printStrings	src/level1/util.c	/^int printStrings(int argc, char** strings){$/;"	f
 printSuper	src/level1/util.c	/^int printSuper(SUPER *sp) {$/;"	f
-print_menu	src/level1/miscl.c	/^int print_menu() {$/;"	f
 print_prompt	src/level1/miscl.c	/^int print_prompt() {$/;"	f
 proc	include/globals.h	/^PROC   proc[NPROC], *running;  \/\/ PROC; using only proc[0]$/;"	v
 put_block	src/level1/iget_iput_getino.c	/^int put_block(int fd, int blk, char *buf)$/;"	f
-pwd	src/level1/cd_pwd.c	/^int pwd(MINODE *mip) {$/;"	f
 pwd_inline	src/level1/cd_pwd.c	/^int pwd_inline(MINODE *mip) {$/;"	f
 quit	src/level1/util.c	/^int quit() {$/;"	f
 read_file	src/level2/read.c	/^int read_file(int fd, int nbytes) {$/;"	f
@@ -214,8 +213,6 @@ set_bit	src/level1/iget_iput_getino.c	/^int set_bit(char *buf, int bit)$/;"	f
 sibling	include/type.h	/^  struct Proc *sibling;$/;"	m	struct:Proc	typeref:struct:Proc::Proc
 sp	include/type.h	/^SUPER *sp;$/;"	v
 status	include/type.h	/^  int   status;$/;"	m	struct:Proc
-testFunc	src/level1/main.c	/^int testFunc(char **args)$/;"	f
-testFunc2	src/level1/main.c	/^int testFunc2(char **args)$/;"	f
 truncate	src/level1/util.c	/^int truncate(MINODE *mip) {$/;"	f
 tst_bit	src/level1/iget_iput_getino.c	/^int tst_bit(char *buf, int bit)$/;"	f
 uid	include/type.h	/^  int   uid;$/;"	m	struct:Proc

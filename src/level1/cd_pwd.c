@@ -1,7 +1,12 @@
 #include "../../include/level1cmd.h"
 
-int mychdir(char * pathname) {
+int cmd_cd(int argc, char** args) {
+	if(argc > 2) {
+		printf("cd: error: too many arguments\n");
+		return -1;
+	}
 	int dev;
+	char* pathname = args[1];
 	if (pathname[0] == '/') {
 		v_printf("mychdir: starting at root\n");
 		dev = root->dev;
@@ -147,8 +152,8 @@ int pwd_inline(MINODE *mip) {
 	return 0;
 }
 
-int pwd(MINODE *mip) {
-	pwd_inline(mip);
+int cmd_pwd(int argc, char** args) {
+	pwd_inline(running->cwd);
 	printf("\n");
 	return 0;
 }

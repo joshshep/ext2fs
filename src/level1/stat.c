@@ -16,8 +16,12 @@ void getModeStr(char *destStr, int i_mode)
 }
 
 
-int do_stat(char *pathname)
-{
+int cmd_stat(int argc, char** args) {
+	if (argc < 2) {
+		printf("stat: error: too few arguments\n");
+		return -1;
+	}
+	char* pathname = args[1];
 	int dev = getStartDev(pathname);
 
 	int ino = getino(&dev, pathname);

@@ -106,7 +106,12 @@ int hasChildren(MINODE *mip)
 	return 0;
 }
 
-int myrmdir(char *pathname) {
+int cmd_rmdir(int argc, char** args) {
+	if (argc < 2) {
+		printf("rmdir: error: too few arguments\n");
+		return -1;
+	}
+	char* pathname = args[1];
 	int dev = getStartDev(pathname);
 
 	char* bname = basename(pathname);

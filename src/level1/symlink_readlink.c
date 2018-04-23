@@ -1,6 +1,16 @@
 #include "../../include/level1cmd.h"
 
-int do_symlink(char *oldName, char * newName) {
+int cmd_readlink(int argc, char** args) {
+	if (argc < 2) {
+		printf("symlink: error: too few arguments\n");
+		return -1;
+	} else if (argc > 2) {
+		printf("symlink: error: too many arguments\n");
+		return -1;
+	}
+	char* oldName = args[1];
+	char* newName = args[2];
+	
 	int dev;
 	if (newName[0] == '/') {
 		v_printf("do_symlink: starting at root\n");
@@ -46,7 +56,12 @@ int do_symlink(char *oldName, char * newName) {
 	return 0;
 }
 
-int do_readlink(char *pathname) {
+int cmd_readlink(int argc, char** args) {
+	if (argc < 2) {
+		printf("readlink: error: too few arguments\n");
+		return -1;
+	}
+	char* pathname = args[1];
 	int dev;
 	if (pathname[0] == '/') {
 		v_printf("readlink: starting at root\n");
