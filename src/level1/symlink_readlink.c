@@ -1,6 +1,7 @@
 #include "../../include/level1cmd.h"
 
 int cmd_symlink(int argc, char** args) {
+	// check number of arguments
 	if (argc < 2) {
 		printf("symlink: error: too few arguments\n");
 		return -1;
@@ -11,14 +12,7 @@ int cmd_symlink(int argc, char** args) {
 	char* oldName = args[1];
 	char* newName = args[2];
 
-	int dev;
-	if (newName[0] == '/') {
-		v_printf("do_symlink: starting at root\n");
-		dev = root->dev;
-	} else {
-		v_printf("do_symlink: not starting at root\n");
-		dev = running->cwd->dev;
-	}
+	int dev = getStartDev(newName);
 
 	char sbuf[MAX_LINE], sbuf2[MAX_LINE];
 	strcpy(sbuf, newName); strcpy(sbuf2, newName);
@@ -30,6 +24,8 @@ int cmd_symlink(int argc, char** args) {
 	INODE * new_pip = & new_pmip->INODE;
 
 	if (creat_file(sbuf2) != EXIT_SUCCESS) {
+		iput(new_mip);
+		iput(new_pmip);
 		return -1;
 	}
 
@@ -49,29 +45,25 @@ int cmd_symlink(int argc, char** args) {
 	new_pmip->dirty = 1;
 
 	iput(new_mip);
-
-
 	iput(new_pmip);
 
 	return 0;
 }
 
 int cmd_readlink(int argc, char** args) {
+	// check number of arguments
 	if (argc < 2) {
 		printf("readlink: error: too few arguments\n");
 		return -1;
 	}
 	char* pathname = args[1];
-	int dev;
-	if (pathname[0] == '/') {
-		v_printf("readlink: starting at root\n");
-		dev = root->dev;
-	} else {
-		v_printf("readlink: not starting at root\n");
-		dev = running->cwd->dev;
-	}
+	int dev = getStartDev(pathname);
 	int ino = getino(&dev, pathname);
 	MINODE * mip = iget(dev, ino);
+	if (!mip) {
+		printf("readlink: error: file does not exist\n");
+		return -2;
+	}
 	INODE * ip = & mip->INODE;
 
 	if (!S_ISLNK(ip->i_mode)) {

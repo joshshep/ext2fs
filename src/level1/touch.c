@@ -1,6 +1,6 @@
 #include "../../include/level1cmd.h"
 
-int cmd_readlink(int argc, char** args) {
+int cmd_touch(int argc, char** args) {
 	if (argc < 2) {
 		printf("touch: error: too few arguments\n");
 		return -1;

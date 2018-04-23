@@ -61,6 +61,7 @@ TODO: make multiple directories
 
 */
 int cmd_mkdir(int argc, char** args) {
+	// check number of arguments
 	if (argc < 2) {
 		printf("mkdir: error: too few arguments\n");
 		return -1;
@@ -140,12 +141,13 @@ int mycreat(MINODE *pmip, const char *name) {
 }
 
 int cmd_creat(int argc, char** args) {
+	// check number of arguments
 	if (argc < 2) {
 		printf("creat: error: too few arguments\n");
 		return -1;
 	}
 	char* pathname = args[1];
-	
+
 	int dev = getStartDev(pathname);
 	char dname_buf[MAX_LINE], bname_buf[MAX_LINE];
 	strcpy(dname_buf, pathname);

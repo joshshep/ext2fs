@@ -104,10 +104,11 @@ cmd_pfd	src/level2/open_close_lseek.c	/^int cmd_pfd(int argc, char** args) {$/;"
 cmd_print_menu	src/level1/miscl.c	/^int cmd_print_menu(int argc, char** args) {$/;"	f
 cmd_pwd	src/level1/cd_pwd.c	/^int cmd_pwd(int argc, char** args) {$/;"	f
 cmd_readlink	src/level1/symlink_readlink.c	/^int cmd_readlink(int argc, char** args) {$/;"	f
-cmd_readlink	src/level1/touch.c	/^int cmd_readlink(int argc, char** args) {$/;"	f
 cmd_rmdir	src/level1/rmdir.c	/^int cmd_rmdir(int argc, char** args) {$/;"	f
 cmd_stat	src/level1/stat.c	/^int cmd_stat(int argc, char** args) {$/;"	f
 cmd_symlink	src/level1/symlink_readlink.c	/^int cmd_symlink(int argc, char** args) {$/;"	f
+cmd_touch	src/level1/touch.c	/^int cmd_touch(int argc, char** args) {$/;"	f
+cmd_unlink	src/level1/link_unlink.c	/^int cmd_unlink(int argc, char** args) {$/;"	f
 cwd	include/type.h	/^  struct Minode *cwd;$/;"	m	struct:Proc	typeref:struct:Proc::Minode
 d_printf	include/globals.h	65;"	d
 d_printf	include/globals.h	68;"	d
@@ -119,7 +120,6 @@ dev	include/type.h	/^  int  dev, busy;   $/;"	m	struct:Mount
 dirty	include/type.h	/^  int   dirty;$/;"	m	struct:Minode
 disks_dir	makefile	/^disks_dir = disks$/;"	m
 display_cur_mnts	src/level3/mount.c	/^int display_cur_mnts() {$/;"	f
-do_unlink	src/level1/link_unlink.c	/^int do_unlink(char *pathname) {$/;"	f
 dp	include/type.h	/^DIR   *dp; $/;"	v
 enter_name	src/level1/util.c	/^int enter_name(MINODE *pmip, int myino, const char *myname, int file_type) {$/;"	f
 fd	include/type.h	/^  OFT   *fd[NFD];$/;"	m	struct:Proc

@@ -17,6 +17,7 @@ void getModeStr(char *destStr, int i_mode)
 
 
 int cmd_stat(int argc, char** args) {
+	// check number of arguments
 	if (argc < 2) {
 		printf("stat: error: too few arguments\n");
 		return -1;

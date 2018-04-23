@@ -107,6 +107,7 @@ int hasChildren(MINODE *mip)
 }
 
 int cmd_rmdir(int argc, char** args) {
+	// check number of arguments
 	if (argc < 2) {
 		printf("rmdir: error: too few arguments\n");
 		return -1;

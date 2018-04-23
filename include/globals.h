@@ -41,9 +41,9 @@ MOUNT root_mnt;
 
 
 #define NUM_DIRECT_BLK (12)
-#define INDIRECT_BLK (12)
+#define INDIRECT_BLK (NUM_DIRECT_BLK)
 #define NUM_INDIRECT_BLK (BLKSIZE/sizeof(int))
-#define DOUBLE_INDIRECT_BLK (13)
+#define DOUBLE_INDIRECT_BLK (INDIRECT_BLK + 1)
 
 // each indirect block has 256 block numbers in it
 // each of those block numbers corresponds to a block of size BLKSIZE
@@ -55,17 +55,17 @@ MOUNT root_mnt;
 //http://stackoverflow.com/a/1644898
 //#define VERBOSE
 #ifdef VERBOSE
-#define v_printf(...) \
+#  define v_printf(...) \
           do { fprintf(stderr, __VA_ARGS__); } while (0)
 #else
-#define v_printf(...)
+#  define v_printf(...)
 #endif
 
 #ifdef DEBUG
-#define d_printf(...) \
+#  define d_printf(...) \
           do { fprintf(stderr, __VA_ARGS__); } while (0)
 #else
-#define d_printf(...)
+#  define d_printf(...)
 #endif
 
 #define MIN(x,y) ((x < y) ? (x): (y))

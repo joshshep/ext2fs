@@ -1,6 +1,7 @@
 #include "../../include/level1cmd.h"
 
 int cmd_link(int argc, char** args) {
+	// check number of arguments
 	if (argc > 3) {
 		printf("link: error: too many arguments\n");
 		return -1;
@@ -53,15 +54,15 @@ int cmd_link(int argc, char** args) {
 }
 
 
-int do_unlink(char *pathname) {
-	int dev;
-	if (pathname[0] == '/') {
-		v_printf("unlink: starting at root\n");
-		dev = root->dev;
-	} else {
-		v_printf("unlink: not starting at root\n");
-		dev = running->cwd->dev;
+int cmd_unlink(int argc, char** args) {
+	// check number of arguments
+	if (argc < 2) {
+		printf("unlink: error: too few arguments\n");
+		return -1;
 	}
+	char* pathname = args[1];
+	int dev = getStartDev(pathname);
+
 	int ino = getino(&dev, pathname);
 	if (!ino) {
 		printf("unlink: can't find '%s'\n",pathname);

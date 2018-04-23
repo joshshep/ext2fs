@@ -4,6 +4,7 @@
 chmod multiple files
 */
 int cmd_chmod(int argc, char** args) {
+	// check number of arguments
 	if (argc < 3) {
 		printf("chmod: error: too few arguments\n");
 		return -1;

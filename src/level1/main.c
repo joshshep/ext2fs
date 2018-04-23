@@ -64,7 +64,7 @@ int main(int argc, char *argv[ ]) {
 	// set running cwd to point at / in mem
 	running->cwd = root;
 
-	print_menu();
+	cmd_print_menu(NULL, NULL);
 
 	root_mnt.bmap = bmap;
 	root_mnt.imap = imap;

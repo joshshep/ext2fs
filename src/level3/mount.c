@@ -41,6 +41,7 @@ int display_cur_mnts() {
 }
 
 int cmd_mount(int argc, char** args) {
+	// check number of arguments
 	if (argc > 3) {
 		printf("mount: error: too many arguments\n");
 		return -1;

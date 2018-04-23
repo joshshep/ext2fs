@@ -1,6 +1,7 @@
 #include "../../include/level1cmd.h"
 
 int cmd_cd(int argc, char** args) {
+	// check number of arguments
 	if(argc > 2) {
 		printf("cd: error: too many arguments\n");
 		return -1;
