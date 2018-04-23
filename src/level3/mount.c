@@ -40,11 +40,16 @@ int display_cur_mnts() {
 	return 0;
 }
 
-int do_mount(char* filesys, char* mnt_pnt) {
-	if (!filesys[0] && !mnt_pnt[0]) {
+int cmd_mount(int argc, char** args) {
+	if (argc > 3) {
+		printf("mount: error: too many arguments\n");
+		return -1;
+	} else if (argc == 1) {
 		display_cur_mnts();
 		return 0;
 	}
+	char* filesys = args[1];
+	char* mnt_pnt = args[2];
 	if (isMounted(filesys)) {
 		printf("mount: filesys already mounted\n");
 		return 0;

@@ -1,6 +1,14 @@
 #include "../../include/level3cmd.h"
 
-int umount(char *filesys) {
+int cmd_mount(int argc, char** args) {
+	if (argc > 2) {
+		printf("umount: error: too many arguments\n");
+		return -1;
+	} else if (argc < 2) {
+		printf("umount: error: missing operand\n");
+		return -1;
+	}
+	char* filesys = args[1];
 	v_printf("umount: filesys=\"%s\"\n",filesys);
 	int imnt;
 	for (imnt=0; imnt<NMOUNT; ++imnt) {

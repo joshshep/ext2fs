@@ -1,6 +1,12 @@
 #include "../../include/level2cmd.h"
 
-int mycat(char *filename) {
+/*
+
+TODO: do what cat actually does
+
+*/
+int cmd_cat(int argc, char** args) {
+	char* filename = args[1];
 	char buf[BLKSIZE+1]; //one for the null terminator
 	v_printf("cat: open file for read\n");
 	int fd = open_file(filename, 0); //open file for READ

@@ -1,6 +1,15 @@
 #include "../../include/level2cmd.h"
 
-int cp(char *src, char *dst) {
+int cmd_cp(int argc, char** args) {
+	if (argc > 2) {
+		printf("cp: error: too many arguments\n");
+		return -1;
+	} else if (argc < 2) {
+		printf("cp: error: missing operand\n");
+		return -1;
+	}
+	char* src = args[1];
+	char* dst = args[2];
 	int fd = open_file(src, 0);
 	if (fd < 0 ) {
 		return -1;

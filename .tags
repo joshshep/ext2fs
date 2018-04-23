@@ -89,19 +89,25 @@ child	include/type.h	/^  struct Proc *child;$/;"	m	struct:Proc	typeref:struct:Pr
 close_file	src/level2/open_close_lseek.c	/^int close_file(int fd) {$/;"	f
 clr_bit	src/level1/iget_iput_getino.c	/^int clr_bit(char *buf, int bit)$/;"	f
 cmd	include/globals.h	/^char line[128], cmd[64], pathname[64];$/;"	v
+cmd_cat	src/level2/cat.c	/^int cmd_cat(int argc, char** args) {$/;"	f
 cmd_cd	src/level1/cd_pwd.c	/^int cmd_cd(int argc, char** args) {$/;"	f
 cmd_chmod	src/level1/chmod.c	/^int cmd_chmod(int argc, char** args) {$/;"	f
+cmd_cp	src/level2/cp.c	/^int cmd_cp(int argc, char** args) {$/;"	f
 cmd_creat	src/level1/mkdir_creat.c	/^int cmd_creat(int argc, char** args) {$/;"	f
 cmd_link	src/level1/link_unlink.c	/^int cmd_link(int argc, char** args) {$/;"	f
 cmd_ls	src/level1/ls.c	/^int cmd_ls(int argc, char** args) {$/;"	f
 cmd_mkdir	src/level1/mkdir_creat.c	/^int cmd_mkdir(int argc, char** args) {$/;"	f
+cmd_mount	src/level3/mount.c	/^int cmd_mount(int argc, char** args) {$/;"	f
+cmd_mount	src/level3/umount.c	/^int cmd_mount(int argc, char** args) {$/;"	f
+cmd_mv	src/level2/mv.c	/^int cmd_mv(int argc, char** args) {$/;"	f
+cmd_pfd	src/level2/open_close_lseek.c	/^int cmd_pfd(int argc, char** args) {$/;"	f
 cmd_print_menu	src/level1/miscl.c	/^int cmd_print_menu(int argc, char** args) {$/;"	f
 cmd_pwd	src/level1/cd_pwd.c	/^int cmd_pwd(int argc, char** args) {$/;"	f
 cmd_readlink	src/level1/symlink_readlink.c	/^int cmd_readlink(int argc, char** args) {$/;"	f
 cmd_readlink	src/level1/touch.c	/^int cmd_readlink(int argc, char** args) {$/;"	f
 cmd_rmdir	src/level1/rmdir.c	/^int cmd_rmdir(int argc, char** args) {$/;"	f
 cmd_stat	src/level1/stat.c	/^int cmd_stat(int argc, char** args) {$/;"	f
-cp	src/level2/cp.c	/^int cp(char *src, char *dst) {$/;"	f
+cmd_symlink	src/level1/symlink_readlink.c	/^int cmd_symlink(int argc, char** args) {$/;"	f
 cwd	include/type.h	/^  struct Minode *cwd;$/;"	m	struct:Proc	typeref:struct:Proc::Minode
 d_printf	include/globals.h	65;"	d
 d_printf	include/globals.h	68;"	d
@@ -113,7 +119,6 @@ dev	include/type.h	/^  int  dev, busy;   $/;"	m	struct:Mount
 dirty	include/type.h	/^  int   dirty;$/;"	m	struct:Minode
 disks_dir	makefile	/^disks_dir = disks$/;"	m
 display_cur_mnts	src/level3/mount.c	/^int display_cur_mnts() {$/;"	f
-do_mount	src/level3/mount.c	/^int do_mount(char* filesys, char* mnt_pnt) {$/;"	f
 do_unlink	src/level1/link_unlink.c	/^int do_unlink(char *pathname) {$/;"	f
 dp	include/type.h	/^DIR   *dp; $/;"	v
 enter_name	src/level1/util.c	/^int enter_name(MINODE *pmip, int myino, const char *myname, int file_type) {$/;"	f
@@ -164,10 +169,8 @@ mount_root	src/level1/util.c	/^int mount_root(int dev) {$/;"	f
 mounted	include/type.h	/^  int   mounted;$/;"	m	struct:Minode
 mounted_inode	include/type.h	/^  struct Minode *mounted_inode;$/;"	m	struct:Mount	typeref:struct:Mount::Minode
 mountptr	include/type.h	/^  struct Mount *mountptr;$/;"	m	struct:Minode	typeref:struct:Minode::Mount
-mv	src/level2/mv.c	/^int mv(char *src, char *dst) {$/;"	f
 my_get_block	src/level3/mount.c	/^int my_get_block(int fd, int blk, char *buf)$/;"	f
 my_lseek	src/level2/open_close_lseek.c	/^int my_lseek(int fd, int pos) {$/;"	f
-mycat	src/level2/cat.c	/^int mycat(char *filename) {$/;"	f
 mycreat	src/level1/mkdir_creat.c	/^int mycreat(MINODE *pmip, const char *name) {$/;"	f
 mymkdir	src/level1/mkdir_creat.c	/^int mymkdir(MINODE *pmip, const char *name) {$/;"	f
 myread	src/level2/read.c	/^int myread(int fd, char* buf, int nbytes) {$/;"	f
@@ -187,7 +190,6 @@ parent	include/type.h	/^  struct Proc *parent;$/;"	m	struct:Proc	typeref:struct:
 parseLine	src/level1/util.c	/^int parseLine(char* line, int* argc, char** args) {$/;"	f
 pathname	include/globals.h	/^char line[128], cmd[64], pathname[64];$/;"	v
 pause	src/level1/util.c	/^int pause() {$/;"	f
-pfd	src/level2/open_close_lseek.c	/^int pfd() {$/;"	f
 pid	include/type.h	/^  int   pid;$/;"	m	struct:Proc
 ppid	include/type.h	/^  int   ppid;$/;"	m	struct:Proc
 printGd	src/level1/util.c	/^int printGd(GD *gp) {$/;"	f
@@ -216,7 +218,6 @@ status	include/type.h	/^  int   status;$/;"	m	struct:Proc
 truncate	src/level1/util.c	/^int truncate(MINODE *mip) {$/;"	f
 tst_bit	src/level1/iget_iput_getino.c	/^int tst_bit(char *buf, int bit)$/;"	f
 uid	include/type.h	/^  int   uid;$/;"	m	struct:Proc
-umount	src/level3/umount.c	/^int umount(char *filesys) {$/;"	f
 updateGlobals	src/level1/iget_iput_getino.c	/^int updateGlobals(int newDev) {$/;"	f
 v_printf	include/globals.h	58;"	d
 v_printf	include/globals.h	61;"	d

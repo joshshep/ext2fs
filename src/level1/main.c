@@ -125,14 +125,8 @@ int main(int argc, char *argv[ ]) {
 	}
 
 	while(1) { // command processing loop
-		char arg1[MAX_LINE];
-		char arg2[MAX_LINE];
 		char line[MAX_LINE];
-		char cmd[MAX_LINE];
 		line[0] = 0;
-		cmd[0] = 0;
-		arg1[0] = 0;
-		arg2[0] = 0;
 		print_prompt();
 
 		/*

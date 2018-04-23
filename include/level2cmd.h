@@ -7,6 +7,13 @@
 #include "globals.h"
 #include "level1cmd.h"
 
+//commands
+int cmd_pfd(int argc, char** args);
+int cmd_cat(int argc, char** args);
+int cmd_mv(int argc, char** args);
+int cmd_cp(int argc, char** args);
+
+
 // function prototypes
 int open_file(char *pathname, int mode);
 
@@ -16,23 +23,12 @@ int close_file(int fd);
 
 int my_lseek(int fd, int pos);
 
-int pfd();
-
-int print_menu();
-
 int print_prompt();
-
-int mycat(char *pathname);
 
 int get_physical_bno(MINODE *mip,int lbno);
 
 int mywrite(int fd, char *buf, int nbytes);
 
 int write_file(int fd, char *str);
-
-
-int cp(char *src, char *dst);
-
-int mv(char *src, char *dst);
 
 #endif

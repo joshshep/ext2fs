@@ -69,7 +69,7 @@ This function displays the currently opened files as follows:
 		--------------------------------------
 to help the user know what files has been opened.
 */
-int pfd() {
+int cmd_pfd(int argc, char** args) {
 	printf("  fd     mode    offset    INODE\n");
 	printf(" ----    ----    ------   --------\n");
 	for (int fd=0; fd<NFD; fd++) {

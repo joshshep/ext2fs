@@ -5,8 +5,8 @@ int cmd_cd(int argc, char** args) {
 		printf("cd: error: too many arguments\n");
 		return -1;
 	}
-	int dev;
 	char* pathname = args[1];
+	int dev;
 	if (pathname[0] == '/') {
 		v_printf("mychdir: starting at root\n");
 		dev = root->dev;

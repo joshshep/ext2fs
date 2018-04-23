@@ -1,7 +1,15 @@
 #include "../../include/level2cmd.h"
 
-int mv(char *src, char *dst) {
-
+int cmd_mv(int argc, char** args) {
+	if (argc > 2) {
+		printf("mv: error: too many arguments\n");
+		return -1;
+	} else if (argc < 2) {
+		printf("mv: error: missing operand\n");
+		return -1;
+	}
+	char* src = args[1];
+	char* dst = args[2];
 	int srcdev = getStartDev(src);
 
 	int dstdev = getStartDev(dst);

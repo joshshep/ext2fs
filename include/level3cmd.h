@@ -7,10 +7,8 @@
 #include "globals.h"
 #include "level2cmd.h"
 
-// function prototypes
-
-int do_mount(char *filesys, char *mnt_pnt);
-
-int umount(char *filesys);
+//commands
+int cmd_mount(int argc, char** args);
+int cmd_umount(int argc, char** args);
 
 #endif
