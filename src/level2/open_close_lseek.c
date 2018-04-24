@@ -118,7 +118,13 @@ int open_file(char *pathname, int mode) {
 			return -1;
 		}
 		strcpy(sbuf, pathname);
-		creat_file(sbuf);
+		char* creat_args[2];
+		creat_args[0] = "creat";
+		creat_args[1] = sbuf;
+		if (cmd_creat(2, creat_args) != EXIT_SUCCESS) {
+			printf("open_file: error: couldn't creat new file\n");
+			return -1;
+		}
 		strcpy(sbuf, pathname);
 		ino = getino(&dev, sbuf);
 

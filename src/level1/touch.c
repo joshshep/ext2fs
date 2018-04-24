@@ -13,7 +13,10 @@ int cmd_touch(int argc, char** args) {
 	int ino = getino(&dev, fname);
 	if(!ino) {
 		v_printf("touch: couldn't find filename \"%s\".\n",sbuf);
-		if (creat_file(sbuf) != EXIT_SUCCESS) {
+		char* creat_args[2];
+		creat_args[0] = "creat";
+		creat_args[1] = sbuf;
+		if (cmd_creat(2, creat_args) != EXIT_SUCCESS) {
 			printf("touch: couldn't create file\n");
 			return -1;
 		}

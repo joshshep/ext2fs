@@ -1,6 +1,6 @@
 #include "../../include/level3cmd.h"
 
-int cmd_mount(int argc, char** args) {
+int cmd_umount(int argc, char** args) {
 	// check number of arguments
 	if (argc > 2) {
 		printf("umount: error: too many arguments\n");

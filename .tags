@@ -98,16 +98,17 @@ cmd_link	src/level1/link_unlink.c	/^int cmd_link(int argc, char** args) {$/;"	f
 cmd_ls	src/level1/ls.c	/^int cmd_ls(int argc, char** args) {$/;"	f
 cmd_mkdir	src/level1/mkdir_creat.c	/^int cmd_mkdir(int argc, char** args) {$/;"	f
 cmd_mount	src/level3/mount.c	/^int cmd_mount(int argc, char** args) {$/;"	f
-cmd_mount	src/level3/umount.c	/^int cmd_mount(int argc, char** args) {$/;"	f
 cmd_mv	src/level2/mv.c	/^int cmd_mv(int argc, char** args) {$/;"	f
 cmd_pfd	src/level2/open_close_lseek.c	/^int cmd_pfd(int argc, char** args) {$/;"	f
 cmd_print_menu	src/level1/miscl.c	/^int cmd_print_menu(int argc, char** args) {$/;"	f
 cmd_pwd	src/level1/cd_pwd.c	/^int cmd_pwd(int argc, char** args) {$/;"	f
+cmd_quit	src/level1/util.c	/^int cmd_quit(int argc, char** args) {$/;"	f
 cmd_readlink	src/level1/symlink_readlink.c	/^int cmd_readlink(int argc, char** args) {$/;"	f
 cmd_rmdir	src/level1/rmdir.c	/^int cmd_rmdir(int argc, char** args) {$/;"	f
 cmd_stat	src/level1/stat.c	/^int cmd_stat(int argc, char** args) {$/;"	f
 cmd_symlink	src/level1/symlink_readlink.c	/^int cmd_symlink(int argc, char** args) {$/;"	f
 cmd_touch	src/level1/touch.c	/^int cmd_touch(int argc, char** args) {$/;"	f
+cmd_umount	src/level3/umount.c	/^int cmd_umount(int argc, char** args) {$/;"	f
 cmd_unlink	src/level1/link_unlink.c	/^int cmd_unlink(int argc, char** args) {$/;"	f
 cwd	include/type.h	/^  struct Minode *cwd;$/;"	m	struct:Proc	typeref:struct:Proc::Minode
 d_printf	include/globals.h	65;"	d
@@ -199,7 +200,6 @@ print_prompt	src/level1/miscl.c	/^int print_prompt() {$/;"	f
 proc	include/globals.h	/^PROC   proc[NPROC], *running;  \/\/ PROC; using only proc[0]$/;"	v
 put_block	src/level1/iget_iput_getino.c	/^int put_block(int fd, int blk, char *buf)$/;"	f
 pwd_inline	src/level1/cd_pwd.c	/^int pwd_inline(MINODE *mip) {$/;"	f
-quit	src/level1/util.c	/^int quit() {$/;"	f
 read_file	src/level2/read.c	/^int read_file(int fd, int nbytes) {$/;"	f
 refCount	include/type.h	/^  int   refCount;$/;"	m	struct:Minode
 refCount	include/type.h	/^  int   refCount;$/;"	m	struct:Oft

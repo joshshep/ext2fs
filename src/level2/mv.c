@@ -34,14 +34,41 @@ int cmd_mv(int argc, char** args) {
 	if (srcdev == dstdev) {
 		// same device
 		v_printf("mv: src and dst are SAME device\n");
-		do_link(src, dst);
-		//if (S_I)
-		do_unlink(src);
+		//link src->dst
+		char* cmd_args[3];
+		cmd_args[0] = "link";
+		cmd_args[1] = src;
+		cmd_args[2] = dst;
+		if (cmd_link(3, cmd_args) != EXIT_SUCCESS) {
+			printf("mv: error: couldn't link files\n");
+			return -1;
+		}
+
+		//unlink src
+		cmd_args[0] = "unlink";
+		if (cmd_unlink(2, cmd_args) != EXIT_SUCCESS) {
+			printf("mv: error: couldn't unlink src file\n");
+			return -1;
+		}
 	} else {
 		//different devices
 		v_printf("mv: src and dst are DIFF device\n");
-		cp(src, dst);
-		do_unlink(src);
+		//copy src->dest
+		char* cmd_args[3];
+		cmd_args[0] = "cp";
+		cmd_args[1] = src;
+		cmd_args[2] = dst;
+		if (cmd_cp(3, cmd_args) != EXIT_SUCCESS) {
+			printf("mv: error: couldn't copy file\n");
+			return -1;
+		}
+		
+		//unlink src
+		cmd_args[0] = "unlink";
+		if (cmd_unlink(2, cmd_args) != EXIT_SUCCESS) {
+			printf("mv: error: couldn't unlink src file\n");
+			return -1;
+		}
 	}
 	return 0;
 }

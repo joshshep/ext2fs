@@ -94,7 +94,7 @@ int mount_root(int dev) {
 }
 
 
-int quit() {
+int cmd_quit(int argc, char** args) {
 	v_printf("quitting prog\n");
 	v_printf("writing inodes back to disk\n");
 	for (int i=0; i<NMINODE; i++) {

@@ -23,8 +23,10 @@ int cmd_symlink(int argc, char** args) {
 	MINODE * new_pmip = iget(dev, new_pino);
 	INODE * new_pip = & new_pmip->INODE;
 
-	if (creat_file(sbuf2) != EXIT_SUCCESS) {
-		iput(new_mip);
+	char* creat_args[2];
+	creat_args[0] = "creat";
+	creat_args[1] = sbuf2;
+	if (cmd_creat(2, creat_args) != EXIT_SUCCESS) {
 		iput(new_pmip);
 		return -1;
 	}
