@@ -145,7 +145,6 @@ int main(int argc, char *argv[ ]) {
 		// first element in args should be the command
 		int argc;
 		parseLine(line, &argc, args);
-		printStrings(argc, args);
 		//parseLine(line, cmd, arg);
 
 		// run the function that corresponds to the input string command
