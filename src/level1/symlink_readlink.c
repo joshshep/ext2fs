@@ -2,10 +2,10 @@
 
 int cmd_symlink(int argc, char** args) {
 	// check number of arguments
-	if (argc < 2) {
+	if (argc < 3) {
 		printf("symlink: error: too few arguments\n");
 		return -1;
-	} else if (argc > 2) {
+	} else if (argc > 3) {
 		printf("symlink: error: too many arguments\n");
 		return -1;
 	}
@@ -69,12 +69,12 @@ int cmd_readlink(int argc, char** args) {
 	INODE * ip = & mip->INODE;
 
 	if (!S_ISLNK(ip->i_mode)) {
-		v_printf("readlink: error \"%s\" is not a symlink\n",pathname);
+		printf("readlink: error \"%s\" is not a symlink\n",pathname);
 		iput(mip);
 		return -1;
 	}
 	v_printf("\"%s\" is symlink\n", pathname);
-	printf("contents:\n");
+	v_printf("contents:\n");
 
 	//tricky tricky Mr. KC
 	printf("%s\n",(char *) ip->i_block);

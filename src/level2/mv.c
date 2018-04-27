@@ -2,10 +2,10 @@
 
 int cmd_mv(int argc, char** args) {
 	// check number of arguments
-	if (argc > 2) {
+	if (argc > 3) {
 		printf("mv: error: too many arguments\n");
 		return -1;
-	} else if (argc < 2) {
+	} else if (argc < 3) {
 		printf("mv: error: missing operand\n");
 		return -1;
 	}
@@ -62,7 +62,7 @@ int cmd_mv(int argc, char** args) {
 			printf("mv: error: couldn't copy file\n");
 			return -1;
 		}
-		
+
 		//unlink src
 		cmd_args[0] = "unlink";
 		if (cmd_unlink(2, cmd_args) != EXIT_SUCCESS) {
