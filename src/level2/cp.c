@@ -2,10 +2,10 @@
 
 int cmd_cp(int argc, char** args) {
 	// check number of arguments
-	if (argc > 2) {
+	if (argc > 3) {
 		printf("cp: error: too many arguments\n");
 		return -1;
-	} else if (argc < 2) {
+	} else if (argc < 3) {
 		printf("cp: error: missing operand\n");
 		return -1;
 	}

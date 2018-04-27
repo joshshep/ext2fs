@@ -75,11 +75,9 @@ $(LEVEL3OBJS): $(level3_obj_dir)/%.o : $(level3_src_dir)/%.c $(INCLUDES)
 	$(CC) -c $(CFLAGS) $< -o $@
 
 test: all
-	./$(TARGET) $(disks_dir)/mydisk
+	./$(TARGET) $(disks_dir)/dirs.img
 test2: all
-	./$(TARGET) $(disks_dir)/diskimage
-testexam: all
-	./$(TARGET) $(disks_dir)/diskimage
+	./$(TARGET) $(disks_dir)/files.img
 
 verbose: CFLAGS += -DVERBOSE
 verbose: all
