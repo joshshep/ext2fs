@@ -94,8 +94,16 @@ newdisks:
 run: all
 	./$(BINS)
 
-turnin_file:
+project_src.txt:
 	./scripts/get_src_onefile.bash > project_src.txt
 
 clean:
 	rm -rf $(LEVEL1OBJS) $(LEVEL2OBJS) $(LEVEL3OBJS) $(TARGET)
+
+.PHONY: clean \
+	all \
+	test \
+	test2 \
+	verbose \
+	newdisks \
+	run

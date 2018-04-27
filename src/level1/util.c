@@ -13,47 +13,47 @@ int getStartDev(const char *pathname) {
 }
 
 int printSuper(SUPER *sp) {
-	v_printf("********** SUPER block ************\n");
-	v_printf("s_magic = %x\n", sp->s_magic);
+	printf("********** SUPER block ************\n");
+	printf("s_magic = %x\n", sp->s_magic);
 
-	v_printf("s_inodes_count = %d\n", sp->s_inodes_count);
-	v_printf("s_blocks_count = %d\n", sp->s_blocks_count);
+	printf("s_inodes_count = %d\n", sp->s_inodes_count);
+	printf("s_blocks_count = %d\n", sp->s_blocks_count);
 
-	v_printf("s_free_inodes_count = %d\n", sp->s_free_inodes_count);
-	v_printf("s_free_blocks_count = %d\n", sp->s_free_blocks_count);
-	v_printf("s_first_data_block = %d\n", sp->s_first_data_block);
-
-
-	v_printf("s_log_block_size = %d\n", sp->s_log_block_size);
-	// v_printf("s_log_frag_size = %d\n", sp->s_log_frag_size);
-
-	v_printf("s_blocks_per_group = %d\n", sp->s_blocks_per_group);
-	// v_printf("s_frags_per_group = %d\n", sp->s_frags_per_group);
-	v_printf("s_inodes_per_group = %d\n", sp->s_inodes_per_group);
+	printf("s_free_inodes_count = %d\n", sp->s_free_inodes_count);
+	printf("s_free_blocks_count = %d\n", sp->s_free_blocks_count);
+	printf("s_first_data_block = %d\n", sp->s_first_data_block);
 
 
-	v_printf("s_mnt_count = %d\n", sp->s_mnt_count);
-	v_printf("s_max_mnt_count = %d\n", sp->s_max_mnt_count);
+	printf("s_log_block_size = %d\n", sp->s_log_block_size);
+	// printf("s_log_frag_size = %d\n", sp->s_log_frag_size);
 
-	v_printf("s_magic = %x\n", sp->s_magic);
+	printf("s_blocks_per_group = %d\n", sp->s_blocks_per_group);
+	// printf("s_frags_per_group = %d\n", sp->s_frags_per_group);
+	printf("s_inodes_per_group = %d\n", sp->s_inodes_per_group);
+
+
+	printf("s_mnt_count = %d\n", sp->s_mnt_count);
+	printf("s_max_mnt_count = %d\n", sp->s_max_mnt_count);
+
+	printf("s_magic = %x\n", sp->s_magic);
 
 	//TODO use strftime instead
-	v_printf("s_mtime = %s\n", strtok(ctime((time_t *) &sp->s_mtime),"\n"));
-	v_printf("s_wtime = %s\n", strtok(ctime((time_t *)&sp->s_wtime),"\n"));
-	v_printf("\n");
+	printf("s_mtime = %s\n", strtok(ctime((time_t *) &sp->s_mtime),"\n"));
+	printf("s_wtime = %s\n", strtok(ctime((time_t *)&sp->s_wtime),"\n"));
+	printf("\n");
 	return 0;
 }
 
 int printGd(GD *gp) {
-	v_printf("************* group 0 info ****************\n");
-	v_printf("Blocks bitmap block %10d\n",gp->bg_block_bitmap);
-	v_printf("Inodes bitmap block %10d\n",gp->bg_inode_bitmap);
-	v_printf("Inodes table block  %10d\n",gp->bg_inode_table);
-	v_printf("Free blocks count   %10d\n",gp->bg_free_blocks_count);
-	v_printf("Free inodes count   %10d\n",gp->bg_free_inodes_count);
-	v_printf("Directories count   %10d\n",gp->bg_used_dirs_count);
-	v_printf("inodes_start        %10d\n",gp->bg_inode_table);
-	v_printf("\n");
+	printf("************* group 0 info ****************\n");
+	printf("Blocks bitmap block %10d\n",gp->bg_block_bitmap);
+	printf("Inodes bitmap block %10d\n",gp->bg_inode_bitmap);
+	printf("Inodes table block  %10d\n",gp->bg_inode_table);
+	printf("Free blocks count   %10d\n",gp->bg_free_blocks_count);
+	printf("Free inodes count   %10d\n",gp->bg_free_inodes_count);
+	printf("Directories count   %10d\n",gp->bg_used_dirs_count);
+	printf("inodes_start        %10d\n",gp->bg_inode_table);
+	printf("\n");
 	return 0;
 }
 

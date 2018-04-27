@@ -25,8 +25,8 @@ int cmd_umount(int argc, char** args) {
 
 	for(int imip=0; imip<NMINODE; ++imip) {
 		if (minode[imip].dev == mount[imnt].dev) {
-			//printf("umount: error: filesys busy\n");
-			//return -2;
+			printf("umount: error: filesys busy\n");
+			return -2;
 		}
 	}
 

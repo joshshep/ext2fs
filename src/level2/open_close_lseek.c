@@ -21,12 +21,12 @@ As you already know, these are needed for I/O redirections
 
 int close_file(int fd) {
 	if (fd < 0 || fd >= NFD) {
-		printf("close_file: error: fd out of range\n");
+		v_printf("close_file: error: fd out of range\n");
 		return -1;
 	}
 	OFT * oftp = running->fd[fd];
 	if (!oftp) {
-		printf("close_file: error: bad oft in running->fd[fd]\n");
+		v_printf("close_file: error: bad oft in running->fd[fd]\n");
 		return -2;
 	}
 	running->fd[fd] = 0;
@@ -46,13 +46,13 @@ int close_file(int fd) {
 int my_lseek(int fd, int pos) {
 	OFT * oftp = running->fd[fd];
 	if (!oftp) {
-		printf("lseek: error: bad oft in running->fd[fd]\n");
+		v_printf("lseek: error: bad oft in running->fd[fd]\n");
 		return -1;
 	}
 	MINODE *mip = oftp->inodeptr;
 	INODE *ip = & mip->INODE;
 	if (pos < 0 || pos >= ip->i_size) {
-		printf("lseek: error: position out of bounds of file");
+		v_printf("lseek: error: position out of bounds of file");
 	}
 	int origOffset = oftp->offset;
 	oftp->offset = pos;
@@ -114,7 +114,7 @@ int open_file(char *pathname, int mode) {
 	if (!ino) {
 		// if the mode is a write type, then we should make the file
 		if (mode < 1 || mode > 3) {
-			printf("open_file: error: mode is read AND can't find '%s'\n",pathname);
+			c_printf("open_file: error: mode is read AND can't find '%s'\n",pathname);
 			return -1;
 		}
 		strcpy(sbuf, pathname);
@@ -122,14 +122,14 @@ int open_file(char *pathname, int mode) {
 		creat_args[0] = "creat";
 		creat_args[1] = sbuf;
 		if (cmd_creat(2, creat_args) != EXIT_SUCCESS) {
-			printf("open_file: error: couldn't creat new file\n");
+			v_printf("open_file: error: couldn't creat new file\n");
 			return -1;
 		}
 		strcpy(sbuf, pathname);
 		ino = getino(&dev, sbuf);
 
 		if (!ino) {
-			printf("open_file: error: we can't find the file we just made\n");
+			v_printf("open_file: error: we can't find the file we just made\n");
 			return -1;
 		}
 
@@ -141,14 +141,14 @@ int open_file(char *pathname, int mode) {
 
 	if (S_ISDIR(ip->i_mode)) {
 		v_printf("is a DIR file\n");
-		printf("error: \"%s\" must be a reg file\n",pathname);
+		v_printf("error: \"%s\" must be a reg file\n",pathname);
 		return -2;
 	} else if (S_ISREG(ip->i_mode)){
 		v_printf("is a REG file (not dir)\n");
 		//ls_file();
 		//is dir
 	} else {
-		printf("error: is neither DIR nor REG\n");
+		v_printf("error: is neither DIR nor REG\n");
 		return -3;
 	}
 	//if (oft->)
@@ -182,7 +182,7 @@ int open_file(char *pathname, int mode) {
 		}
 	}
 	if (!first_empty_oftp ) {
-		printf("open_file: error: no room in open file table\n");
+		v_printf("open_file: error: no room in open file table\n");
 		return -1;
 	}
 
@@ -208,7 +208,7 @@ int open_file(char *pathname, int mode) {
 			oftp->offset = ip->i_size;
 			break;
 		default:
-			printf("open(): erro: invalid mode (%d)\n", mode);
+			v_printf("open(): erro: invalid mode (%d)\n", mode);
 			return -4;
 
 	}
@@ -219,7 +219,7 @@ int open_file(char *pathname, int mode) {
 		}
 	}
 	if (i >= NFD ) {
-		printf("open_file(): error: couldn't find a place for OFT entry");
+		v_printf("open_file(): error: couldn't find a place for OFT entry");
 		return -5;
 	}
 

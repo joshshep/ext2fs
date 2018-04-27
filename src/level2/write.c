@@ -61,7 +61,7 @@ int write_file(int fd, char* str) {
 	OFT* oftp = running->fd[fd];
 	if (oftp->mode < 1 || oftp->mode > 3) {
 		//not W,WR, APPEND
-		printf("write_file: error: invalid mode for fd\n");
+		v_printf("write_file: error: invalid mode for fd\n");
 		return -1;
 	}
 	//TODO malloc()/memcpy()
