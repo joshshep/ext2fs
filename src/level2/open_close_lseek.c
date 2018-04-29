@@ -114,7 +114,7 @@ int open_file(char *pathname, int mode) {
 	if (!ino) {
 		// if the mode is a write type, then we should make the file
 		if (mode < 1 || mode > 3) {
-			c_printf("open_file: error: mode is read AND can't find '%s'\n",pathname);
+			v_printf("open_file: error: mode is read AND can't find '%s'\n",pathname);
 			return -1;
 		}
 		strcpy(sbuf, pathname);
