@@ -92,7 +92,7 @@ newdisks:
 
 #disk:
 run: all
-	./$(BINS)
+	./$(TARGET)
 
 project_src.txt:
 	./scripts/get_src_onefile.bash > project_src.txt
